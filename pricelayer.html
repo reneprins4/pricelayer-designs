@@ -1,0 +1,1210 @@
+<html lang="nl" class="scroll-smooth"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pricelayer.io — Unified Retail Data Engine</title>
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <meta name="disabled-font-classes" content="font-roboto,font-montserrat,font-poppins,font-instrument-serif,font-merriweather,font-bricolage,font-jakarta,font-manrope,font-space-grotesk,font-work-sans,font-pt-serif,font-geist-mono,font-space-mono,font-quicksand,font-nunito">
+    <link id="all-fonts-link-font-geist" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;display=swap">
+    
+    
+    <style>
+      .font-geist { font-family: 'Geist', sans-serif !important; }
+      .font-instrument { font-family: 'Instrument Serif', serif; }
+      
+      /* Utilities */
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      
+      /* Animations */
+      .reveal-on-scroll { opacity: 0; transform: translateY(30px); filter: blur(4px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+      .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+      
+      @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+      }
+      .animate-blob { animation: blob 7s infinite; }
+      .animation-delay-2000 { animation-delay: 2s; }
+      .animation-delay-4000 { animation-delay: 4s; }
+      
+      @keyframes drift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      /* Horizontal Marquee for Brands */
+      @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .animate-marquee { animation: marquee 40s linear infinite; }
+      .animate-marquee:hover { animation-play-state: paused; }
+      
+      /* Glass Effects */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+      
+      .glass-dark {
+        background: rgba(10, 10, 10, 0.6);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      
+      .glass-card-hover {
+        transition: all 0.4s ease;
+      }
+      .glass-card-hover:hover {
+        background: rgba(255, 255, 255, 0.85);
+        transform: translateY(-2px);
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+        border-color: rgba(0, 0, 0, 0.05);
+      }
+
+      /* Noise Texture */
+      .bg-noise {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+      }
+    </style>
+  </head>
+  <body class="antialiased bg-white text-neutral-900 font-geist selection:bg-emerald-100 selection:text-emerald-900">
+    
+    <!-- Background Grid -->
+    <div class="fixed inset-0 w-full h-full -z-10 pointer-events-none bg-neutral-50/50">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div class="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-white via-white/80 to-transparent"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed top-4 left-0 right-0 z-50 px-4 md:px-6">
+      <div class="max-w-5xl mx-auto rounded-full glass-panel shadow-sm shadow-black/5 px-4 md:px-6 py-3 flex items-center justify-between transition-all duration-300 hover:shadow-md">
+        <!-- Brand -->
+        <a href="/" class="inline-flex items-center gap-2 group">
+          <div class="w-8 h-8 bg-neutral-900 rounded-full flex items-center justify-center text-white shadow-lg shadow-neutral-900/20 group-hover:scale-105 transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          </div>
+          <span class="font-bold text-sm tracking-tight text-neutral-900 hidden sm:block">Pricelayer.io</span>
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6 text-xs font-medium text-neutral-500">
+          <a href="#categories" class="hover:text-neutral-900 transition-colors">Categorieën</a>
+          <a href="#features" class="hover:text-neutral-900 transition-colors">Features</a>
+          <a href="#dashboard" class="hover:text-neutral-900 transition-colors">Insights</a>
+          <a href="#integrations" class="hover:text-neutral-900 transition-colors">Integraties</a>
+          <a href="#pricing" class="hover:text-neutral-900 transition-colors">Prijzen</a>
+        </nav>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-3">
+          <a href="#login" class="hidden md:block text-xs font-medium text-neutral-600 hover:text-neutral-900 transition-colors">Inloggen</a>
+          <a href="#register" class="inline-flex items-center gap-2 hover:bg-neutral-800 transition-all duration-300 hover:scale-105 font-medium text-white bg-neutral-900 rounded-full py-2 px-4 shadow-lg shadow-neutral-900/20 text-xs">
+            Start Gratis
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-24 lg:pt-32">
+      <!-- Hero Section (Fixed: Added data-element-id) -->
+      <section data-element-id="aura-hero" class="sm:px-8 max-w-7xl mx-auto pr-6 pb-20 pl-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <!-- Left: Copy -->
+          <div class="max-w-xl relative">
+            <!-- Background Blob -->
+            <div class="absolute -top-20 -left-20 w-72 h-72 bg-emerald-300/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+            <div class="absolute -bottom-20 right-0 w-72 h-72 bg-blue-300/30 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+
+            <div class="relative">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 mb-8 opacity-0 translate-y-8 blur-md transition-all duration-700 ease-out py-1 px-3 rounded-full bg-white/50 border border-neutral-200 backdrop-blur-sm" data-animate="">
+                  <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-600">Nu Live: Toys Category</span>
+                </div>
+
+                <h1 class="text-5xl lg:text-[76px] leading-[0.9] font-semibold tracking-tighter text-neutral-900 mb-6 opacity-0 translate-y-8 blur-md transition-all duration-700 ease-out delay-150" data-animate="">
+                  Data intelligence <br>voor <span class="font-instrument italic text-5xl lg:text-[84px] text-transparent bg-clip-text bg-gradient-to-r from-neutral-400 to-neutral-600">Next-Gen</span> Commerce.
+                </h1>
+                
+                <p class="text-lg leading-relaxed text-neutral-500 mb-8 opacity-0 translate-y-8 blur-md transition-all duration-700 ease-out delay-300 font-medium max-w-md" data-animate="">
+                  Pricelayer biedt real-time marktinzichten. Wij scannen miljoenen producten zodat u zich kunt richten op groei.
+                </p>
+
+                <!-- CTAs -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-12 opacity-0 translate-y-8 blur-md transition-all duration-700 ease-out delay-[450ms]" data-animate="">
+                  <a href="#register" class="group relative inline-flex items-center justify-center font-medium text-white bg-neutral-900 rounded-full py-3.5 pl-6 pr-3 shadow-xl shadow-neutral-900/10 overflow-hidden">
+                    <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    <span class="relative">Start Dashboard</span>
+                    <span class="ml-3 relative inline-flex items-center justify-center h-7 w-7 rounded-full bg-white/20 group-hover:bg-white/30 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </span>
+                  </a>
+                  <a href="#features" class="inline-flex items-center gap-2 text-neutral-600 font-medium hover:text-neutral-900 px-6 py-3.5 border border-neutral-200 rounded-full bg-white/50 backdrop-blur-sm hover:bg-white transition-all">
+                    Bekijk Features
+                  </a>
+                </div>
+            </div>
+
+            <script>
+              document.addEventListener('DOMContentLoaded', () => {
+                  const targetEl = document.querySelector('[data-element-id="aura-hero"]');
+                  if (!targetEl) return;
+                  const animateElements = targetEl.querySelectorAll('[data-animate]');
+                  const observer = new IntersectionObserver((entries) => {
+                      entries.forEach(entry => {
+                          if (entry.isIntersecting) {
+                              animateElements.forEach(element => { element.classList.remove('opacity-0', 'translate-y-8', 'blur-md'); });
+                              observer.unobserve(targetEl);
+                          }
+                      });
+                  }, { threshold: 0.1 });
+                  observer.observe(targetEl);
+              });
+            </script>
+          </div>
+
+          <!-- Right: Visual -->
+          <div class="relative perspective-1000">
+            <div class="relative overflow-hidden bg-white/40 backdrop-blur-xl rounded-[32px] border border-white/50 shadow-[0_0_100px_-20px_rgba(0,0,0,0.05)] ring-1 ring-black/5 p-2">
+              
+              <div class="absolute inset-0 bg-gradient-to-tr from-white/80 to-transparent opacity-50 z-10 pointer-events-none"></div>
+
+              <div class="relative rounded-[24px] overflow-hidden bg-white sm:h-[600px] h-[500px]">
+                <style>
+                    @keyframes marquee-vertical { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+                    .animate-marquee-vertical { animation: marquee-vertical 40s linear infinite; }
+                    .animate-marquee-vertical:hover { animation-play-state: paused; }
+                </style>
+
+                <!-- Gradient Overlay for fade effect -->
+                <div class="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white to-transparent z-10"></div>
+                <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent z-10"></div>
+
+                <!-- Scrolling Container -->
+                <div class="absolute inset-0">
+                  <div class="animate-marquee-vertical">
+                    <!-- Cards Loop -->
+                    <div class="relative w-full flex flex-col items-center justify-center p-8 gap-6">
+                      
+                      <!-- Card 1 -->
+                      <div class="w-full max-w-sm bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg shadow-black/5 border border-neutral-100 flex items-center gap-4 transition-transform hover:scale-105 duration-300">
+                        <div class="w-14 h-14 rounded-xl bg-neutral-100 overflow-hidden shrink-0 relative shadow-inner">
+                          <img src="https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?auto=format&fit=crop&q=80&w=200" alt="Lego" class="w-full h-full object-cover mix-blend-multiply">
+                        </div>
+                        <div class="flex-1">
+                          <h4 class="text-sm font-semibold text-neutral-900">LEGO Star Wars</h4>
+                          <div class="mt-1 flex items-center justify-between">
+                             <div class="flex items-center gap-2">
+                                <span class="text-[10px] text-neutral-400 line-through">€89.99</span>
+                                <span class="text-xs font-mono font-bold text-emerald-600">€74.50</span>
+                             </div>
+                             <span class="text-[10px] bg-emerald-50 text-emerald-600 px-1.5 py-0.5 rounded-md font-medium border border-emerald-100">-17%</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Card 2 -->
+                      <div class="w-full max-w-sm bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg shadow-black/5 border border-neutral-100 flex items-center gap-4 transition-transform hover:scale-105 duration-300 ml-6">
+                        <div class="w-14 h-14 rounded-xl bg-neutral-100 overflow-hidden shrink-0 relative shadow-inner">
+                          <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&q=80&w=200" alt="Plush" class="w-full h-full object-cover mix-blend-multiply">
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between">
+                                <h4 class="text-sm font-semibold text-neutral-900">Teddy Bear XXL</h4>
+                                <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+                            </div>
+                            <p class="text-xs text-neutral-500 mt-1">Nieuwe voorraad bij Bol.com</p>
+                        </div>
+                      </div>
+
+                      <!-- Card 3 (Dark) -->
+                      <div class="w-full max-w-sm bg-neutral-900 rounded-2xl p-5 shadow-2xl border border-neutral-700 flex items-start gap-4 transition-transform hover:scale-105 duration-300 mr-4">
+                        <div class="w-8 h-8 rounded-lg bg-white/10 text-white flex items-center justify-center shrink-0 font-mono text-[10px] border border-white/10">
+                            API
+                        </div>
+                        <div class="w-full overflow-hidden">
+                          <h4 class="text-xs font-semibold text-neutral-300 uppercase tracking-wide">Webhook Event</h4>
+                          <div class="mt-2 text-[10px] font-mono text-emerald-400 bg-black/50 p-2 rounded border border-white/10 w-full">
+                            { status: "price_drop", sku: "T-882" }
+                          </div>
+                        </div>
+                      </div>
+
+                        <!-- Card 4 -->
+                        <div class="w-full max-w-sm bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg shadow-black/5 border border-neutral-100 flex items-center gap-4 transition-transform hover:scale-105 duration-300">
+                        <div class="w-14 h-14 rounded-xl bg-neutral-100 overflow-hidden shrink-0 relative shadow-inner">
+                          <img src="https://images.unsplash.com/photo-1594787318286-3d835c1d207f?auto=format&fit=crop&q=80&w=200" alt="Car" class="w-full h-full object-cover mix-blend-multiply">
+                        </div>
+                        <div class="flex-1">
+                          <h4 class="text-sm font-semibold text-neutral-900">RC Racer X1</h4>
+                          <div class="mt-1 flex items-center justify-between">
+                             <span class="text-xs text-red-500 font-medium bg-red-50 px-2 py-0.5 rounded-full border border-red-100">Out of Stock</span>
+                             <span class="text-[10px] text-neutral-400">Since 2m ago</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Duplicate Set -->
+                    <div class="relative w-full flex flex-col items-center justify-center p-8 gap-6">
+                        <!-- Card 1 -->
+                        <div class="w-full max-w-sm bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg shadow-black/5 border border-neutral-100 flex items-center gap-4 transition-transform hover:scale-105 duration-300">
+                          <div class="w-14 h-14 rounded-xl bg-neutral-100 overflow-hidden shrink-0 relative shadow-inner">
+                            <img src="https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?auto=format&fit=crop&q=80&w=200" alt="Lego" class="w-full h-full object-cover mix-blend-multiply">
+                          </div>
+                          <div class="flex-1">
+                            <h4 class="text-sm font-semibold text-neutral-900">LEGO Star Wars</h4>
+                            <div class="mt-1 flex items-center justify-between">
+                               <div class="flex items-center gap-2">
+                                  <span class="text-[10px] text-neutral-400 line-through">€89.99</span>
+                                  <span class="text-xs font-mono font-bold text-emerald-600">€74.50</span>
+                               </div>
+                               <span class="text-[10px] bg-emerald-50 text-emerald-600 px-1.5 py-0.5 rounded-md font-medium border border-emerald-100">-17%</span>
+                            </div>
+                          </div>
+                        </div>
+  
+                        <!-- Card 2 -->
+                        <div class="w-full max-w-sm bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg shadow-black/5 border border-neutral-100 flex items-center gap-4 transition-transform hover:scale-105 duration-300 ml-6">
+                          <div class="w-14 h-14 rounded-xl bg-neutral-100 overflow-hidden shrink-0 relative shadow-inner">
+                            <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&q=80&w=200" alt="Plush" class="w-full h-full object-cover mix-blend-multiply">
+                          </div>
+                          <div class="flex-1">
+                              <div class="flex items-start justify-between">
+                                  <h4 class="text-sm font-semibold text-neutral-900">Teddy Bear XXL</h4>
+                                  <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+                              </div>
+                              <p class="text-xs text-neutral-500 mt-1">Nieuwe voorraad bij Bol.com</p>
+                          </div>
+                        </div>
+  
+                        <!-- Card 3 (Dark) -->
+                        <div class="w-full max-w-sm bg-neutral-900 rounded-2xl p-5 shadow-2xl border border-neutral-700 flex items-start gap-4 transition-transform hover:scale-105 duration-300 mr-4">
+                          <div class="w-8 h-8 rounded-lg bg-white/10 text-white flex items-center justify-center shrink-0 font-mono text-[10px] border border-white/10">
+                              API
+                          </div>
+                          <div class="w-full overflow-hidden">
+                            <h4 class="text-xs font-semibold text-neutral-300 uppercase tracking-wide">Webhook Event</h4>
+                            <div class="mt-2 text-[10px] font-mono text-emerald-400 bg-black/50 p-2 rounded border border-white/10 w-full">
+                              { status: "price_drop", sku: "T-882" }
+                            </div>
+                          </div>
+                        </div>
+  
+                          <!-- Card 4 -->
+                          <div class="w-full max-w-sm bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg shadow-black/5 border border-neutral-100 flex items-center gap-4 transition-transform hover:scale-105 duration-300">
+                          <div class="w-14 h-14 rounded-xl bg-neutral-100 overflow-hidden shrink-0 relative shadow-inner">
+                            <img src="https://images.unsplash.com/photo-1594787318286-3d835c1d207f?auto=format&fit=crop&q=80&w=200" alt="Car" class="w-full h-full object-cover mix-blend-multiply">
+                          </div>
+                          <div class="flex-1">
+                            <h4 class="text-sm font-semibold text-neutral-900">RC Racer X1</h4>
+                            <div class="mt-1 flex items-center justify-between">
+                               <span class="text-xs text-red-500 font-medium bg-red-50 px-2 py-0.5 rounded-full border border-red-100">Out of Stock</span>
+                               <span class="text-[10px] text-neutral-400">Since 2m ago</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEW SECTION: Trusted Brands (Marquee) -->
+      <section class="border-y border-neutral-100 bg-white/80 backdrop-blur-sm relative overflow-hidden py-10">
+        <div class="max-w-7xl mx-auto px-6 mb-6">
+            <p class="text-center text-sm font-semibold text-neutral-400 uppercase tracking-widest">Wij scannen data van toonaangevende platformen</p>
+        </div>
+        
+        <div class="flex overflow-hidden relative group">
+             <!-- Gradient Masks for infinite scroll fade -->
+             <div class="absolute left-0 top-0 bottom-0 w-20 lg:w-40 z-10 bg-gradient-to-r from-white to-transparent"></div>
+             <div class="absolute right-0 top-0 bottom-0 w-20 lg:w-40 z-10 bg-gradient-to-l from-white to-transparent"></div>
+
+             <!-- Marquee Track -->
+             <div class="flex gap-12 lg:gap-24 animate-marquee items-center min-w-max px-6">
+                <!-- Logos (Using clean text/SVG representations for reliability) -->
+                
+                <!-- Bol.com -->
+                <div class="text-2xl font-bold text-neutral-800 flex items-center gap-1 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+                    <div class="w-6 h-6 rounded-full bg-blue-600"></div> bol.com
+                </div>
+
+                <!-- Amazon -->
+                <div class="text-2xl font-bold text-neutral-800 flex items-center gap-1 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+                     amazon
+                     <span class="text-orange-500 text-3xl leading-none block -mt-2">.</span>nl
+                </div>
+
+                <!-- Coolblue -->
+                <div class="text-2xl font-bold text-neutral-800 flex items-center gap-1 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+                    <div class="w-6 h-6 rounded-full border-2 border-orange-500 flex items-center justify-center text-[10px] text-orange-500">CB</div>
+                    Coolblue
+                </div>
+
+                <!-- MediaMarkt -->
+                <div class="text-2xl font-black text-neutral-800 opacity-60 grayscale hover:grayscale-0 transition-all duration-300 tracking-tighter">
+                    MediaMarkt
+                </div>
+
+                <!-- Wehkamp -->
+                <div class="text-2xl font-serif italic text-neutral-800 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+                    wehkamp
+                </div>
+
+                <!-- Intertoys -->
+                <div class="text-2xl font-extrabold text-neutral-800 opacity-60 grayscale hover:grayscale-0 transition-all duration-300 tracking-tight text-yellow-500">
+                    Intertoys
+                </div>
+
+                <!-- Blokker -->
+                <div class="text-2xl font-bold text-neutral-800 opacity-60 grayscale hover:grayscale-0 transition-all duration-300 border-2 border-orange-500 px-2 rounded">
+                    Blokker
+                </div>
+
+                 <!-- DUPLICATE SET FOR INFINITE SCROLL -->
+                 <!-- Bol.com -->
+                 <div class="text-2xl font-bold text-neutral-800 flex items-center gap-1 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+                    <div class="w-6 h-6 rounded-full bg-blue-600"></div> bol.com
+                </div>
+                <!-- Amazon -->
+                <div class="text-2xl font-bold text-neutral-800 flex items-center gap-1 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+                     amazon
+                     <span class="text-orange-500 text-3xl leading-none block -mt-2">.</span>nl
+                </div>
+                <!-- Coolblue -->
+                <div class="text-2xl font-bold text-neutral-800 flex items-center gap-1 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+                    <div class="w-6 h-6 rounded-full border-2 border-orange-500 flex items-center justify-center text-[10px] text-orange-500">CB</div>
+                    Coolblue
+                </div>
+                <!-- MediaMarkt -->
+                <div class="text-2xl font-black text-neutral-800 opacity-60 grayscale hover:grayscale-0 transition-all duration-300 tracking-tighter">
+                    MediaMarkt
+                </div>
+                <!-- Wehkamp -->
+                <div class="text-2xl font-serif italic text-neutral-800 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+                    wehkamp
+                </div>
+                <!-- Intertoys -->
+                <div class="text-2xl font-extrabold text-neutral-800 opacity-60 grayscale hover:grayscale-0 transition-all duration-300 tracking-tight text-yellow-500">
+                    Intertoys
+                </div>
+                <!-- Blokker -->
+                <div class="text-2xl font-bold text-neutral-800 opacity-60 grayscale hover:grayscale-0 transition-all duration-300 border-2 border-orange-500 px-2 rounded">
+                    Blokker
+                </div>
+             </div>
+        </div>
+      </section>
+
+      <!-- Categories Section -->
+      <section class="max-w-7xl mx-auto px-6 lg:px-8 py-20" id="categories">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+          <div class="max-w-2xl">
+            <h2 class="text-3xl lg:text-4xl font-semibold text-neutral-900 tracking-tight">Ondersteunde Categorieën</h2>
+            <p class="text-neutral-500 mt-4 text-lg">Wij rollen onze technologie sector per sector uit om de hoogste datakwaliteit te garanderen.</p>
+          </div>
+          <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 group">
+            Bekijk roadmap
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right group-hover:translate-x-1 transition-transform"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Active: Toys -->
+          <div class="group relative rounded-3xl overflow-hidden h-96 border border-neutral-200 shadow-sm cursor-pointer hover:shadow-2xl transition-all duration-500 reveal-on-scroll">
+            <div class="absolute inset-0 bg-neutral-900/5 group-hover:bg-transparent transition-colors z-10"></div>
+            <div class="absolute top-4 left-4 z-20">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-white/80 text-emerald-700 backdrop-blur-md shadow-lg border border-white/40">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                Nu Actief
+              </span>
+            </div>
+            <img src="https://images.unsplash.com/photo-1599623560574-39d485900c95?q=80&w=600&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Toys">
+            
+            <!-- Glass Overlay on Hover -->
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+            
+            <div class="absolute bottom-0 left-0 right-0 p-6 z-20 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+              <div class="h-[1px] w-12 bg-white/50 mb-4"></div>
+              <h3 class="text-white text-2xl font-bold tracking-tight mb-2">Toys & Games</h3>
+              <p class="text-neutral-200 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 leading-relaxed">
+                Volledige dekking van LEGO, Barbie, Mattel en meer.
+              </p>
+            </div>
+          </div>
+
+          <!-- Future Cards (Grayscale to Color on hover) -->
+          <!-- Tools -->
+          <div class="group relative rounded-3xl overflow-hidden h-96 border border-neutral-200 bg-neutral-100 reveal-on-scroll delay-100">
+            <div class="absolute inset-0 w-full h-full bg-neutral-200 transition-all duration-500 group-hover:opacity-0 z-10 mix-blend-saturation pointer-events-none"></div>
+            <div class="absolute top-4 left-4 z-20">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-neutral-900/10 text-neutral-900 backdrop-blur-md border border-white/20">Future</span>
+            </div>
+            <img src="https://images.unsplash.com/photo-1530124566582-a618bc2615dc?q=80&w=600&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" alt="Tools">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 p-6 z-20">
+              <h3 class="text-white text-xl font-bold tracking-tight">Tools & Hardware</h3>
+              <p class="text-neutral-300 text-sm mt-1">Verwacht in Q3 2025</p>
+            </div>
+          </div>
+
+          <!-- Pet Supplies -->
+          <div class="group relative rounded-3xl overflow-hidden h-96 border border-neutral-200 bg-neutral-100 reveal-on-scroll delay-200">
+             <div class="absolute inset-0 w-full h-full bg-neutral-200 transition-all duration-500 group-hover:opacity-0 z-10 mix-blend-saturation pointer-events-none"></div>
+             <div class="absolute top-4 left-4 z-20">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-neutral-900/10 text-neutral-900 backdrop-blur-md border border-white/20">Future</span>
+              </div>
+            <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=600&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" alt="Pets">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 p-6 z-20">
+              <h3 class="text-white text-xl font-bold tracking-tight">Pet Supplies</h3>
+              <p class="text-neutral-300 text-sm mt-1">Verwacht in Q4 2025</p>
+            </div>
+          </div>
+
+          <!-- Baby -->
+          <div class="group relative rounded-3xl overflow-hidden h-96 border border-neutral-200 bg-neutral-100 reveal-on-scroll delay-300">
+            <div class="absolute inset-0 w-full h-full bg-neutral-200 transition-all duration-500 group-hover:opacity-0 z-10 mix-blend-saturation pointer-events-none"></div>
+            <div class="absolute top-4 left-4 z-20">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-neutral-900/10 text-neutral-900 backdrop-blur-md border border-white/20">Future</span>
+            </div>
+            <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?q=80&w=600&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" alt="Baby">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 p-6 z-20">
+              <h3 class="text-white text-xl font-bold tracking-tight">Baby & Toddler</h3>
+              <p class="text-neutral-300 text-sm mt-1">Verwacht in 2026</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Detailed Features -->
+      <section class="py-24 bg-neutral-50/50 border-y border-neutral-200 relative overflow-hidden" id="features">
+        <div class="bg-noise absolute inset-0 z-0"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          
+          <div class="text-center max-w-2xl mx-auto mb-20">
+            <h2 class="text-3xl lg:text-4xl font-semibold text-neutral-900 tracking-tight mb-4">Krachtige tools voor elke stap</h2>
+            <p class="text-neutral-500 text-lg">Van dataverzameling tot automatische acties.</p>
+          </div>
+
+          <!-- Feature 1 -->
+          <div class="flex flex-col lg:flex-row items-center gap-16 mb-24 reveal-on-scroll">
+            <div class="flex-1 order-2 lg:order-1">
+              <div class="glass-card-hover bg-white rounded-3xl border border-neutral-200 shadow-xl overflow-hidden relative group">
+                <!-- Header -->
+                <div class="p-4 border-b border-neutral-100 flex items-center justify-between bg-neutral-50/50 backdrop-blur-sm">
+                  <span class="text-xs font-bold text-neutral-500 uppercase tracking-widest">Prijs Verloop</span>
+                  <div class="flex gap-1.5">
+                    <div class="w-2.5 h-2.5 rounded-full bg-neutral-200 border border-neutral-300"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-neutral-200 border border-neutral-300"></div>
+                  </div>
+                </div>
+                <!-- Mockup Graph -->
+                <div class="p-8 h-72 relative">
+                  <div class="absolute inset-0 p-8 flex flex-col justify-between pointer-events-none opacity-50">
+                    <div class="w-full h-px border-t border-dashed border-neutral-200"></div>
+                    <div class="w-full h-px border-t border-dashed border-neutral-200"></div>
+                    <div class="w-full h-px border-t border-dashed border-neutral-200"></div>
+                    <div class="w-full h-px border-t border-dashed border-neutral-200"></div>
+                  </div>
+                  <svg class="absolute inset-0 w-full h-full p-8" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="gradientLine" x1="0" x2="0" y1="0" y2="1">
+                          <stop offset="0%" stop-color="#059669" stop-opacity="0.2"></stop>
+                          <stop offset="100%" stop-color="#059669" stop-opacity="0"></stop>
+                        </linearGradient>
+                    </defs>
+                    <path d="M0 150 C 100 150, 150 100, 200 100 S 300 120, 400 80 S 500 60, 600 60" stroke="#ef4444" stroke-width="2" fill="none" class="opacity-30" stroke-dasharray="4 4"></path>
+                    <path d="M0 140 C 100 140, 150 90, 200 90 S 300 110, 400 70 S 500 50, 600 50 L 600 200 L 0 200 Z" fill="url(#gradientLine)" class="opacity-50"></path>
+                    <path d="M0 140 C 100 140, 150 90, 200 90 S 300 110, 400 70 S 500 50, 600 50" stroke="#059669" stroke-width="3" fill="none" stroke-linecap="round"></path>
+                    
+                    <circle cx="200" cy="90" r="5" fill="#059669" class="bg-white" stroke="white" stroke-width="3"></circle>
+                    <circle cx="400" cy="70" r="5" fill="#059669" class="bg-white" stroke="white" stroke-width="3"></circle>
+                  </svg>
+                  <div class="absolute top-1/4 left-2/3 bg-neutral-900/90 backdrop-blur-md text-white text-[10px] py-1.5 px-3 rounded-lg shadow-xl transform -translate-x-1/2 -translate-y-1/2 border border-white/10">
+                    <span class="block text-neutral-400 text-[9px] uppercase tracking-wider">Jouw Prijs</span>
+                    <span class="font-bold font-mono">€44.95</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex-1 order-1 lg:order-2">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold mb-4 border border-blue-100 shadow-sm">
+                Market Analysis
+              </div>
+              <h3 class="text-3xl font-semibold text-neutral-900 mb-4 tracking-tight">Zie de toekomst van uw markt</h3>
+              <p class="text-neutral-600 leading-relaxed mb-8 text-lg">
+                Pricelayer analyseert historische prijsdata om trends te voorspellen. Weet precies wanneer concurrenten korting geven.
+              </p>
+              <ul class="space-y-4">
+                <li class="flex items-center gap-3 text-sm text-neutral-700 font-medium">
+                  <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  Historische data tot 2 jaar terug
+                </li>
+                <li class="flex items-center gap-3 text-sm text-neutral-700 font-medium">
+                  <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  Export naar CSV/Excel
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="flex flex-col lg:flex-row items-center gap-16 reveal-on-scroll">
+            <div class="flex-1">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 text-purple-700 text-xs font-semibold mb-4 border border-purple-100 shadow-sm">
+                Inventory Intelligence
+              </div>
+              <h3 class="text-3xl font-semibold text-neutral-900 mb-4 tracking-tight">Benut de tekorten van een ander</h3>
+              <p class="text-neutral-600 leading-relaxed mb-8 text-lg">
+                Is een populair LEGO setje uitverkocht bij Bol.com en Amazon? Onze engine detecteert dit direct, zodat u uw marge automatisch kunt verhogen.
+              </p>
+              <ul class="space-y-4">
+                <li class="flex items-center gap-3 text-sm text-neutral-700 font-medium">
+                  <div class="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  Stock-out alerts via Webhook
+                </li>
+                <li class="flex items-center gap-3 text-sm text-neutral-700 font-medium">
+                  <div class="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  Automatische repricing regels
+                </li>
+              </ul>
+            </div>
+            <div class="flex-1">
+              <div class="glass-card-hover bg-white rounded-3xl border border-neutral-200 shadow-xl p-6 relative overflow-hidden">
+                <div class="space-y-4 relative z-10">
+                  <!-- Competitors -->
+                  <div class="flex items-center justify-between p-4 rounded-2xl bg-neutral-50 border border-neutral-100">
+                    <div class="flex items-center gap-4">
+                      <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-700 font-bold text-xs shadow-sm">B</div>
+                      <div>
+                        <div class="text-sm font-semibold text-neutral-900">Bol.com</div>
+                        <div class="text-xs text-neutral-500">Last check: 1 min ago</div>
+                      </div>
+                    </div>
+                    <div class="text-xs font-semibold text-red-600 bg-red-50 px-3 py-1 rounded-full border border-red-100 flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Out of Stock
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center justify-between p-4 rounded-2xl bg-neutral-50 border border-neutral-100">
+                    <div class="flex items-center gap-4">
+                      <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center text-orange-700 font-bold text-xs shadow-sm">A</div>
+                      <div>
+                        <div class="text-sm font-semibold text-neutral-900">Amazon</div>
+                        <div class="text-xs text-neutral-500">Last check: 2 min ago</div>
+                      </div>
+                    </div>
+                    <div class="text-xs font-semibold text-red-600 bg-red-50 px-3 py-1 rounded-full border border-red-100 flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Out of Stock
+                    </div>
+                  </div>
+                  
+                  <!-- Arrow Connection -->
+                  <div class="flex justify-center -my-2 relative z-0 opacity-20">
+                    <svg width="20" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"><line x1="12" y1="0" x2="12" y2="24"></line><polyline points="6 18 12 24 18 18"></polyline></svg>
+                  </div>
+
+                  <!-- User Action -->
+                  <div class="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-emerald-50 to-white border border-emerald-200 shadow-sm relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-emerald-100/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                    <div class="flex items-center gap-4 relative z-10">
+                      <div class="w-10 h-10 bg-emerald-200 rounded-lg flex items-center justify-center text-emerald-800 font-bold text-xs shadow-sm">YOU</div>
+                      <div>
+                        <div class="text-sm font-semibold text-neutral-900">Actie: Prijs Verhoogd</div>
+                        <div class="text-xs text-emerald-700 font-medium">Opportunity detected</div>
+                      </div>
+                    </div>
+                    <div class="flex flex-col items-end relative z-10">
+                      <span class="text-xs line-through text-neutral-400">€24.99</span>
+                      <span class="text-lg font-bold text-emerald-700 tracking-tight">€29.99</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEW SECTION: DASHBOARD INSIGHTS -->
+      <section class="py-24 bg-white relative overflow-hidden" id="dashboard">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 max-w-3xl mx-auto">
+                <span class="text-emerald-600 font-semibold tracking-wide text-xs uppercase mb-3 block">Real-time Dashboard</span>
+                <h2 class="text-4xl lg:text-5xl font-semibold text-neutral-900 tracking-tight mb-6">Controle over elke beweging</h2>
+                <p class="text-neutral-500 text-lg">Zie direct hoe uw strategie presteert. Monitor prijswijzigingen, winstmarges en buy-box prestaties in één oogopslag.</p>
+            </div>
+
+            <!-- Dashboard Mockup Frame -->
+            <div class="relative rounded-3xl bg-neutral-100 p-2 md:p-4 border border-neutral-200 shadow-2xl overflow-hidden reveal-on-scroll">
+                <!-- Background Blur effect -->
+                <div class="absolute -top-40 -right-40 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+                <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+                <!-- Window Header -->
+                <div class="bg-white rounded-t-2xl border-b border-neutral-200 h-10 flex items-center px-4 gap-2">
+                    <div class="flex gap-1.5">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+                    <div class="flex-1 text-center">
+                        <div class="inline-flex items-center gap-1.5 px-3 py-0.5 bg-neutral-100 rounded-md text-[10px] text-neutral-400 font-medium border border-neutral-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            app.pricelayer.io/dashboard
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Content -->
+                <div class="bg-neutral-50 min-h-[600px] rounded-b-2xl flex relative overflow-hidden">
+                    <!-- Sidebar -->
+                    <div class="w-20 lg:w-64 bg-white border-r border-neutral-200 hidden md:flex flex-col py-6">
+                        <div class="px-6 mb-8">
+                            <div class="w-8 h-8 bg-neutral-900 rounded-lg flex items-center justify-center text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            </div>
+                        </div>
+                        <nav class="space-y-1 px-4">
+                            <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg bg-emerald-50 text-emerald-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                                <span class="hidden lg:block">Overzicht</span>
+                            </a>
+                            <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22v-9"/></svg>
+                                <span class="hidden lg:block">Producten</span>
+                            </a>
+                            <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-2"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+                                <span class="hidden lg:block">Instellingen</span>
+                            </a>
+                        </nav>
+                        <div class="mt-auto px-6 pt-6 border-t border-neutral-100">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-emerald-500"></div>
+                                <div class="hidden lg:block">
+                                    <div class="text-xs font-semibold text-neutral-900">Mijn Winkel</div>
+                                    <div class="text-[10px] text-neutral-500">Pro Plan</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Area -->
+                    <div class="flex-1 p-6 lg:p-8 overflow-y-auto">
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-2xl font-bold text-neutral-900">Dashboard</h3>
+                            <div class="flex gap-2">
+                                <span class="text-xs font-medium text-neutral-500 bg-white border border-neutral-200 px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> Live Updates
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- KPI Grid -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                            <!-- KPI 1 -->
+                            <div class="bg-white p-5 rounded-xl border border-neutral-100 shadow-sm">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="text-sm text-neutral-500 font-medium">Buy Box Win %</div>
+                                    <div class="p-1.5 bg-green-50 text-green-600 rounded-lg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                                    </div>
+                                </div>
+                                <div class="flex items-end gap-2">
+                                    <span class="text-3xl font-bold text-neutral-900">84%</span>
+                                    <span class="text-sm font-medium text-green-600 mb-1">+5.2%</span>
+                                </div>
+                            </div>
+                            <!-- KPI 2 -->
+                            <div class="bg-white p-5 rounded-xl border border-neutral-100 shadow-sm">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="text-sm text-neutral-500 font-medium">Gem. Marge</div>
+                                    <div class="p-1.5 bg-blue-50 text-blue-600 rounded-lg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-percent"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+                                    </div>
+                                </div>
+                                <div class="flex items-end gap-2">
+                                    <span class="text-3xl font-bold text-neutral-900">22.8%</span>
+                                    <span class="text-sm font-medium text-neutral-400 mb-1">Stabiel</span>
+                                </div>
+                            </div>
+                            <!-- KPI 3 -->
+                            <div class="bg-white p-5 rounded-xl border border-neutral-100 shadow-sm">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="text-sm text-neutral-500 font-medium">Actieve Reprices (24u)</div>
+                                    <div class="p-1.5 bg-purple-50 text-purple-600 rounded-lg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                                    </div>
+                                </div>
+                                <div class="flex items-end gap-2">
+                                    <span class="text-3xl font-bold text-neutral-900">1,240</span>
+                                    <span class="text-sm font-medium text-green-600 mb-1">+12%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
+                            <!-- Main Chart -->
+                            <div class="lg:col-span-2 bg-white p-6 rounded-xl border border-neutral-100 shadow-sm">
+                                <h4 class="text-sm font-bold text-neutral-900 mb-6">Concurrentie Analyse (Laatste 7 dagen)</h4>
+                                <div class="h-64 w-full relative">
+                                    <!-- Simplified CSS Chart -->
+                                    <div class="absolute inset-0 flex items-end gap-2 md:gap-4 px-2">
+                                        <div class="w-full bg-emerald-500/10 hover:bg-emerald-500/20 transition-colors rounded-t-sm h-[40%] relative group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-neutral-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Ma</div></div>
+                                        <div class="w-full bg-emerald-500/10 hover:bg-emerald-500/20 transition-colors rounded-t-sm h-[60%] relative group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-neutral-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Di</div></div>
+                                        <div class="w-full bg-emerald-500/10 hover:bg-emerald-500/20 transition-colors rounded-t-sm h-[55%] relative group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-neutral-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Wo</div></div>
+                                        <div class="w-full bg-emerald-500/10 hover:bg-emerald-500/20 transition-colors rounded-t-sm h-[70%] relative group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-neutral-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Do</div></div>
+                                        <div class="w-full bg-emerald-500/20 hover:bg-emerald-500/30 transition-colors rounded-t-sm h-[85%] relative group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-neutral-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Vr</div></div>
+                                        <div class="w-full bg-emerald-500/10 hover:bg-emerald-500/20 transition-colors rounded-t-sm h-[65%] relative group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-neutral-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Za</div></div>
+                                        <div class="w-full bg-emerald-500/10 hover:bg-emerald-500/20 transition-colors rounded-t-sm h-[50%] relative group"><div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-neutral-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Zo</div></div>
+                                    </div>
+                                    <!-- Overlay Line -->
+                                    <svg class="absolute inset-0 w-full h-full pointer-events-none overflow-visible" preserveAspectRatio="none">
+                                        <path d="M0 180 L 80 120 L 160 140 L 240 80 L 320 40 L 400 100 L 480 150" stroke="#10b981" stroke-width="3" fill="none" vector-effect="non-scaling-stroke"></path>
+                                        <circle cx="320" cy="40" r="4" class="fill-white stroke-emerald-500 stroke-2"></circle>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Live Feed -->
+                            <div class="bg-white p-6 rounded-xl border border-neutral-100 shadow-sm">
+                                <h4 class="text-sm font-bold text-neutral-900 mb-4">Live Activiteit</h4>
+                                <div class="space-y-4">
+                                    <div class="flex gap-3">
+                                        <div class="mt-1 w-2 h-2 rounded-full bg-emerald-500 shrink-0"></div>
+                                        <div>
+                                            <p class="text-xs text-neutral-800 font-medium">Prijs verlaagd naar €19.95</p>
+                                            <p class="text-[10px] text-neutral-400">LEGO City • Bol.com matched</p>
+                                        </div>
+                                        <span class="ml-auto text-[10px] text-neutral-300">2m</span>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <div class="mt-1 w-2 h-2 rounded-full bg-blue-500 shrink-0"></div>
+                                        <div>
+                                            <p class="text-xs text-neutral-800 font-medium">Stock update: Uitverkocht</p>
+                                            <p class="text-[10px] text-neutral-400">Barbie Dreamhouse • Amazon</p>
+                                        </div>
+                                        <span class="ml-auto text-[10px] text-neutral-300">12m</span>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <div class="mt-1 w-2 h-2 rounded-full bg-emerald-500 shrink-0"></div>
+                                        <div>
+                                            <p class="text-xs text-neutral-800 font-medium">Prijs verhoogd naar €44.50</p>
+                                            <p class="text-[10px] text-neutral-400">Playmobil • Marge beschermd</p>
+                                        </div>
+                                        <span class="ml-auto text-[10px] text-neutral-300">18m</span>
+                                    </div>
+                                    <div class="flex gap-3 opacity-50">
+                                        <div class="mt-1 w-2 h-2 rounded-full bg-emerald-500 shrink-0"></div>
+                                        <div>
+                                            <p class="text-xs text-neutral-800 font-medium">Prijs verlaagd naar €29.00</p>
+                                            <p class="text-[10px] text-neutral-400">Monopoly • Competitor drop</p>
+                                        </div>
+                                        <span class="ml-auto text-[10px] text-neutral-300">1u</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- NEW SECTION: Integrations (Redesigned "Bento" Style & Fixed Layout) -->
+      <section class="py-32 bg-neutral-50 relative overflow-hidden border-t border-neutral-200" id="integrations">
+        <!-- Background Decor -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/80 rounded-full blur-3xl -z-10"></div>
+        <div class="bg-noise absolute inset-0 z-0 opacity-50"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="mb-20 md:text-center max-w-3xl mx-auto">
+                <h2 class="text-4xl lg:text-5xl font-semibold text-neutral-900 tracking-tight mb-6">Plug & Play Ecosystem</h2>
+                <p class="text-neutral-500 text-lg">Geen developers nodig. Koppel uw winkel in enkele klikken en start direct met optimaliseren.</p>
+            </div>
+    
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+                <!-- Main Feature: Shopify (Span 2) -->
+                <div class="md:col-span-2 bg-neutral-900 rounded-[32px] p-8 md:p-12 relative overflow-hidden group text-white hover:shadow-2xl hover:shadow-emerald-900/20 transition-all duration-500">
+                    <!-- Content -->
+                    <div class="relative z-10 flex flex-col justify-between h-full">
+                        <div class="mb-10">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-medium mb-6">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                Most Popular
+                            </div>
+                            <h3 class="text-3xl md:text-4xl font-bold mb-4 tracking-tight">Shopify Native Integration</h3>
+                            <p class="text-neutral-400 text-lg max-w-md leading-relaxed">
+                                De enige repricer die voelt als een native onderdeel van uw Shopify admin. Real-time sync, direct vanuit de App Store.
+                            </p>
+                        </div>
+                        
+                        <a href="#" class="inline-flex items-center gap-2 text-neutral-900 font-bold transition-all bg-white w-fit px-6 py-3.5 rounded-full hover:bg-emerald-400 hover:scale-105">
+                            Installeer App
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </a>
+                    </div>
+    
+                    <!-- Visual Background -->
+                    <div class="absolute -right-12 -bottom-12 opacity-10 md:opacity-20 group-hover:scale-110 transition-transform duration-700 rotate-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    </div>
+                </div>
+    
+                <!-- Vertical Stack (Span 1) -->
+                <div class="flex flex-col gap-6">
+                    <!-- API Card -->
+                    <div class="bg-white border border-neutral-200 rounded-[32px] p-8 shadow-sm hover:shadow-xl hover:border-neutral-300 transition-all duration-300 flex-1 flex flex-col justify-center group">
+                        <div class="w-12 h-12 bg-neutral-100 rounded-2xl flex items-center justify-center mb-4 text-neutral-900 group-hover:scale-110 transition-transform shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-2"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-neutral-900 mb-2 tracking-tight">Developer API</h4>
+                        <p class="text-neutral-500 text-sm leading-relaxed">Volledige REST API toegang voor custom integraties en headless setups.</p>
+                    </div>
+    
+                    <!-- CSV Card -->
+                     <div class="bg-white border border-neutral-200 rounded-[32px] p-8 shadow-sm hover:shadow-xl hover:border-neutral-300 transition-all duration-300 flex-1 flex flex-col justify-center group">
+                        <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-4 text-blue-600 group-hover:scale-110 transition-transform shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-spreadsheet"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 13h2"/><path d="M8 17h2"/><path d="M14 13h2"/><path d="M14 17h2"/></svg>
+                        </div>
+                        <h4 class="text-xl font-bold text-neutral-900 mb-2 tracking-tight">Bulk Export</h4>
+                        <p class="text-neutral-500 text-sm leading-relaxed">Download uw data dagelijks in CSV of Excel formaat.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Row: Logos (Fixed Spacing) -->
+            <div class="pt-10 border-t border-neutral-200/60">
+                <p class="text-center text-xs font-semibold text-neutral-400 mb-10 uppercase tracking-widest">Binnenkort beschikbaar voor</p>
+                <div class="flex justify-center flex-wrap gap-12 md:gap-20 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                    <!-- Magento -->
+                    <div class="flex items-center gap-3 font-bold text-xl text-neutral-900 hover:text-orange-600 transition-colors cursor-default">
+                        <div class="w-10 h-10 bg-white shadow-sm border border-neutral-200 rounded-xl flex items-center justify-center text-orange-600">M</div> Magento
+                    </div>
+                    <!-- WooCommerce -->
+                    <div class="flex items-center gap-3 font-bold text-xl text-neutral-900 hover:text-purple-600 transition-colors cursor-default">
+                        <div class="w-10 h-10 bg-white shadow-sm border border-neutral-200 rounded-xl flex items-center justify-center text-xs text-purple-600">Woo</div> WooCommerce
+                    </div>
+                    <!-- Lightspeed -->
+                    <div class="flex items-center gap-3 font-bold text-xl text-neutral-900 hover:text-red-600 transition-colors cursor-default">
+                        <div class="w-10 h-10 bg-white shadow-sm border border-neutral-200 rounded-xl flex items-center justify-center text-red-600">L</div> Lightspeed
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <!-- Pricing Section -->
+      <section class="lg:px-8 lg:py-32 sm:px-8 pt-20 pr-6 pb-20 pl-6 bg-white" id="pricing">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl lg:text-6xl font-semibold tracking-tighter mb-6 text-neutral-900">Simpele Prijzen</h2>
+          <p class="text-neutral-500 text-lg leading-relaxed max-w-2xl mx-auto">Start gratis, upgrade wanneer u groeit.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-start">
+          
+          <!-- Starter Plan -->
+          <div class="glass-card-hover bg-white rounded-3xl p-8 border border-neutral-200 relative group reveal-on-scroll">
+            <div class="flex items-center gap-4 mb-8">
+              <div class="h-12 w-12 rounded-xl bg-neutral-100 flex items-center justify-center text-neutral-900 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-neutral-900">Free</h3>
+                <p class="text-sm text-neutral-500 font-medium">Om te proberen</p>
+              </div>
+            </div>
+            <div class="mb-8">
+              <div class="flex items-baseline gap-1 mb-2">
+                <span class="text-5xl font-bold text-neutral-900 tracking-tighter">€0</span>
+                <span class="text-neutral-500 font-medium">/maand</span>
+              </div>
+              <p class="text-sm text-neutral-600 leading-relaxed">Perfect om de data kwaliteit te testen.</p>
+            </div>
+            <ul class="space-y-4 mb-8">
+              <li class="flex items-center gap-3 text-sm text-neutral-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                50 Producten
+              </li>
+              <li class="flex items-center gap-3 text-sm text-neutral-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Dagelijkse Updates
+              </li>
+            </ul>
+            <a href="#register" class="inline-flex items-center justify-center hover:bg-neutral-900 transition-colors font-semibold text-neutral-700 hover:text-white border border-neutral-200 hover:border-neutral-900 bg-white hover:bg-neutral-900 w-full rounded-xl py-3.5 shadow-sm">Start Gratis</a>
+          </div>
+
+          <!-- Pro Plan (High Emphasis) -->
+          <div class="relative bg-neutral-900 rounded-3xl p-8 border border-neutral-800 shadow-2xl z-10 transform lg:-translate-y-4">
+             <!-- Glow effect behind -->
+             <div class="absolute inset-0 bg-blue-600/20 blur-3xl -z-10 rounded-3xl"></div>
+             
+             <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+               <span class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg border border-white/20">Meest Gekozen</span>
+             </div>
+
+            <div class="flex items-center gap-4 mb-8">
+              <div class="h-12 w-12 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-900/50">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rocket"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.1 2.8 0 2.8 0"></path><path d="M12 15v5s3.03-.55 4-2c1.1-1.62 0-2.8 0-2.8"></path></svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-white">Pro</h3>
+                <p class="text-sm text-neutral-400 font-medium">Voor serieuze verkopers</p>
+              </div>
+            </div>
+            <div class="mb-8">
+              <div class="flex items-baseline gap-1 mb-2">
+                <span class="text-5xl font-bold text-white tracking-tighter">€99</span>
+                <span class="text-neutral-400 font-medium">/maand</span>
+              </div>
+              <p class="text-sm text-neutral-400 leading-relaxed">Volledige toegang tot de Toys database.</p>
+            </div>
+            <ul class="space-y-4 mb-8">
+              <li class="flex items-center gap-3 text-sm text-white font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400 flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                2,000 Producten
+              </li>
+              <li class="flex items-center gap-3 text-sm text-white font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400 flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Elk Uur Updates
+              </li>
+              <li class="flex items-center gap-3 text-sm text-white font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400 flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                API & Webhooks
+              </li>
+              <!-- Shopify Added -->
+              <li class="flex items-center gap-3 text-sm text-white font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400 flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Shopify Integratie
+              </li>
+            </ul>
+            <a href="#register" class="inline-flex items-center justify-center hover:bg-blue-500 transition-all font-semibold text-white bg-blue-600 w-full rounded-xl py-3.5 shadow-lg shadow-blue-900/40 hover:shadow-blue-600/40">Start 14 Dagen Gratis</a>
+          </div>
+
+          <!-- Business Plan -->
+          <div class="glass-card-hover bg-white rounded-3xl p-8 border border-neutral-200 relative group reveal-on-scroll delay-100">
+            <div class="flex items-center gap-4 mb-8">
+              <div class="h-12 w-12 rounded-xl bg-neutral-100 flex items-center justify-center text-neutral-900 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building-2"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path d="M10 14h4"></path><path d="M10 18h4"></path></svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-neutral-900">Business</h3>
+                <p class="text-sm text-neutral-500 font-medium">Voor grote catalogi</p>
+              </div>
+            </div>
+            <div class="mb-8">
+              <div class="flex items-baseline gap-1 mb-2">
+                <span class="text-5xl font-bold text-neutral-900 tracking-tighter">€299</span>
+                <span class="text-neutral-500 font-medium">/maand</span>
+              </div>
+              <p class="text-sm text-neutral-600 leading-relaxed">Schaalbare infrastructuur voor grote volumes.</p>
+            </div>
+            <ul class="space-y-4 mb-8">
+              <li class="flex items-center gap-3 text-sm text-neutral-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                10,000 Producten
+              </li>
+              <li class="flex items-center gap-3 text-sm text-neutral-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Dedicated Support
+              </li>
+              <li class="flex items-center gap-3 text-sm text-neutral-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 flex-shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Custom Integrations
+              </li>
+            </ul>
+            <a href="#register" class="inline-flex items-center justify-center hover:bg-neutral-900 transition-colors font-semibold text-neutral-700 hover:text-white border border-neutral-200 hover:border-neutral-900 bg-white hover:bg-neutral-900 w-full rounded-xl py-3.5 shadow-sm">Selecteer Plan</a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- CTA Section: Liquid Glass Redesign -->
+      <section class="relative py-32 overflow-hidden bg-neutral-950">
+         <!-- Liquid Background Effects -->
+         <div class="absolute inset-0 z-0">
+             <div class="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-indigo-600/30 rounded-full blur-[120px] mix-blend-screen animate-blob"></div>
+             <div class="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-emerald-600/20 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-4000"></div>
+             <div class="absolute top-[30%] left-[40%] w-[400px] h-[400px] bg-blue-500/20 rounded-full blur-[100px] mix-blend-screen animate-blob animation-delay-2000"></div>
+             
+             <!-- Mesh Grid Overlay -->
+             <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImEiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTTAgNDBWMHjwIjAgMCAwLjEgMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjYSkiLz48L3N2Zz4=')] opacity-20"></div>
+         </div>
+
+         <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+            <!-- Glass Container for Content -->
+            <div class="glass-dark rounded-[40px] p-12 md:p-20 shadow-2xl relative overflow-hidden group">
+                <!-- Inner shimmer -->
+                <div class="absolute inset-0 bg-gradient-to-tr from-white/5 via-white/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"></div>
+
+                <div class="relative z-10">
+                    <h2 class="text-5xl md:text-6xl font-bold tracking-tighter text-white mb-6 drop-shadow-sm">
+                      Klaar om de markt te <br>
+                      <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-white to-emerald-300 animate-gradient-x">verslaan?</span>
+                    </h2>
+                    
+                    <p class="text-lg md:text-xl text-neutral-400 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+                      Stop met gokken op prijzen. Start met datagedreven beslissingen. Maak vandaag nog een account aan en krijg direct inzicht.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-5 justify-center items-center">
+                      <a href="#register" class="relative inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-neutral-900 transition-all duration-200 bg-white rounded-full hover:bg-neutral-100 hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                        <span>Maak gratis account</span>
+                        <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                      </a>
+                      
+                      <a href="#" class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white transition-all duration-200 border border-white/20 rounded-full hover:bg-white/10 hover:border-white/40 backdrop-blur-sm">
+                        Neem contact op
+                      </a>
+                    </div>
+                    
+                    <p class="mt-8 text-sm text-neutral-500 font-medium">
+                        Geen creditcard nodig • Direct toegang
+                    </p>
+                </div>
+            </div>
+         </div>
+      </section>
+
+      <!-- Footer: Liquid Dark Redesign -->
+      <footer class="bg-black text-white pt-24 pb-12 relative overflow-hidden border-t border-white/10">
+        <!-- Footer Background Gradient -->
+        <div class="absolute bottom-0 left-0 right-0 h-[500px] bg-gradient-to-t from-neutral-900 to-transparent pointer-events-none"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-900/40 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-8 mb-20">
+            <!-- Brand Column -->
+            <div class="lg:col-span-2">
+              <a href="/" class="inline-flex items-center gap-2 mb-6 group">
+                <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-black shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-transform group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                </div>
+                <span class="font-bold text-xl tracking-tight text-white">Pricelayer.io</span>
+              </a>
+              <p class="text-neutral-400 text-sm leading-relaxed max-w-xs font-light">
+                Wij democratiseren retail data intelligence. Real-time inzichten voor de volgende generatie e-commerce leiders.
+              </p>
+            </div>
+
+            <!-- Links Columns -->
+            <div class="lg:col-span-1">
+              <h4 class="text-white font-semibold text-sm mb-6 tracking-wide">Platform</h4>
+              <ul class="space-y-4 text-sm text-neutral-400">
+                <li><a href="#" class="hover:text-white transition-colors hover:translate-x-1 inline-block duration-200">Pricing Engine</a></li>
+                <li><a href="#" class="hover:text-white transition-colors hover:translate-x-1 inline-block duration-200">Inventory Alerts</a></li>
+                <li><a href="#" class="hover:text-white transition-colors hover:translate-x-1 inline-block duration-200">Developer API</a></li>
+                <li><a href="#" class="hover:text-white transition-colors hover:translate-x-1 inline-block duration-200">Integrations</a></li>
+              </ul>
+            </div>
+
+            <div class="lg:col-span-1">
+              <h4 class="text-white font-semibold text-sm mb-6 tracking-wide">Roadmap</h4>
+              <ul class="space-y-4 text-sm text-neutral-400">
+                <li>
+                    <a href="#" class="hover:text-white transition-colors flex items-center gap-2 group">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                        Toys
+                    </a>
+                </li>
+                <li><a href="#" class="hover:text-white transition-colors">Tools (Q3)</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Pets (Q4)</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Baby (2026)</a></li>
+              </ul>
+            </div>
+
+            <div class="lg:col-span-1">
+                <h4 class="text-white font-semibold text-sm mb-6 tracking-wide">Company</h4>
+                <ul class="space-y-4 text-sm text-neutral-400">
+                  <li><a href="#" class="hover:text-white transition-colors">About</a></li>
+                  <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                  <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                  <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                </ul>
+              </div>
+
+            <div class="lg:col-span-1">
+              <h4 class="text-white font-semibold text-sm mb-6 tracking-wide">Legal</h4>
+              <ul class="space-y-4 text-sm text-neutral-400">
+                <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Cookie Policy</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-neutral-500 text-xs">© 2025 Pricelayer B.V. Amsterdam. All rights reserved.</p>
+            
+            <div class="flex gap-6">
+                <!-- Socials with hover glow -->
+              <a href="#" class="text-neutral-500 hover:text-white transition-all hover:scale-110 duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+              </a>
+              <a href="#" class="text-neutral-500 hover:text-white transition-all hover:scale-110 duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+              </a>
+              <a href="#" class="text-neutral-500 hover:text-white transition-all hover:scale-110 duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Big Watermark Text -->
+          <div class="mt-20 border-t border-white/5 pt-10 text-center opacity-20 pointer-events-none select-none">
+             <span class="text-[12vw] font-bold leading-none text-transparent bg-clip-text bg-gradient-to-b from-white to-transparent font-instrument italic">Pricelayer</span>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+          if (window.lucide && lucide.createIcons) { lucide.createIcons(); }
+      });
+      document.addEventListener('DOMContentLoaded', () => { 
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }; 
+        const observer = new IntersectionObserver((entries) => { 
+            entries.forEach(entry => { 
+                if (entry.isIntersecting) { 
+                    entry.target.classList.add('is-visible'); 
+                    observer.unobserve(entry.target); 
+                } 
+            }); 
+        }, observerOptions); 
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el)); 
+      });
+    </script>
+  
+</body></html>
