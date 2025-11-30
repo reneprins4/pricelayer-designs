@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToyCompare - De #1 Speelgoed Vergelijker</title>
+    <title>SpeelgoedPrijzen.nl - De #1 Speelgoed Vergelijker</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,15 +11,16 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Google Fonts: Nunito voor die speelse, ronde look -->
+    <!-- Google Fonts: Nunito -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
         body {
             font-family: 'Nunito', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
         
-        /* Custom scrollbar for horizontal sections */
+        /* Custom scrollbar hiding */
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -36,6 +37,23 @@
         }
         .animate-float {
             animation: float 6s ease-in-out infinite;
+        }
+
+        /* Mega Menu Transitions */
+        .mega-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* Show menu on hover for desktop */
+        @media (min-width: 1024px) {
+            .group:hover .mega-menu {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
         }
     </style>
     
@@ -71,126 +89,234 @@
     </div>
 
     <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5 bg-transparent">
-        <div class="max-w-[1440px] mx-auto px-6 md:px-8 flex items-center justify-between">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-3 lg:py-5 bg-transparent">
+        <div class="max-w-[1440px] mx-auto px-4 md:px-8 flex items-center justify-between">
             
-            <!-- Logo -->
-            <div class="flex items-center gap-2 group cursor-pointer">
-                <div class="relative w-10 h-10 md:w-12 md:h-12 bg-primary rounded-xl flex items-center justify-center text-white shadow-[4px_4px_0_#007BB0] group-hover:translate-y-[-2px] group-hover:shadow-[6px_6px_0_#007BB0] transition-all">
-                   <i data-lucide="gamepad-2" stroke-width="2.5" size="24"></i>
+            <!-- Logo + Mobile Menu Button -->
+            <div class="flex items-center gap-4">
+                <!-- Mobile Hamburger -->
+                <button id="mobile-menu-btn" class="lg:hidden p-2 text-slate-700 hover:text-primary transition-colors">
+                    <i data-lucide="menu" size="28"></i>
+                </button>
+
+                <!-- Logo -->
+                <div class="flex items-center gap-2 group cursor-pointer">
+                    <div class="relative w-10 h-10 md:w-12 md:h-12 bg-primary rounded-xl flex items-center justify-center text-white shadow-[3px_3px_0_#007BB0] md:shadow-[4px_4px_0_#007BB0] transition-all">
+                       <i data-lucide="gamepad-2" stroke-width="2.5" size="24"></i>
+                    </div>
+                    <span class="text-xl md:text-2xl font-black tracking-tighter text-slate-900 ml-1 hidden min-[350px]:inline-block">
+                      Speelgoed<span class="text-primary">Prijzen.nl</span>
+                    </span>
                 </div>
-                <span class="text-xl md:text-2xl font-black tracking-tighter text-slate-900 ml-1">
-                  Toy<span class="text-primary">Compare</span>
-                </span>
             </div>
 
-            <!-- Menu Items -->
-            <div class="hidden lg:flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm">
-                <a href="#" class="px-5 py-2.5 rounded-xl font-bold text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Categorieën</a>
-                <a href="#" class="px-5 py-2.5 rounded-xl font-bold text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Leeftijd</a>
-                <a href="#" class="px-5 py-2.5 rounded-xl font-bold text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Merken</a>
-                <a href="#" class="px-5 py-2.5 rounded-xl font-bold text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Sale %</a>
+            <!-- Desktop Menu Items -->
+            <div class="hidden lg:flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm relative z-50">
+                
+                <!-- Categorieën with Mega Menu -->
+                <div class="group relative">
+                    <button class="flex items-center gap-1 px-5 py-2.5 rounded-xl font-bold text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors outline-none">
+                        Categorieën <i data-lucide="chevron-down" size="16"></i>
+                    </button>
+                    
+                    <!-- Mega Menu Dropdown -->
+                    <div class="mega-menu absolute top-full left-0 w-[600px] bg-white rounded-3xl shadow-2xl border border-slate-100 p-8 mt-4 grid grid-cols-3 gap-8 z-50">
+                        <!-- Column 1: Categories -->
+                        <div>
+                            <h4 class="font-black text-slate-900 mb-4 flex items-center gap-2">
+                                <i data-lucide="blocks" size="18" class="text-primary"></i> Soort
+                            </h4>
+                            <ul class="space-y-3 text-sm font-bold text-slate-500">
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">Bouwsets & LEGO</a></li>
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">Gezelschapsspellen</a></li>
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">Poppen & Knuffels</a></li>
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">Voertuigen</a></li>
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">Knutselen & Tekenen</a></li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Column 2: Ages -->
+                        <div>
+                            <h4 class="font-black text-slate-900 mb-4 flex items-center gap-2">
+                                <i data-lucide="baby" size="18" class="text-accent"></i> Leeftijd
+                            </h4>
+                            <ul class="space-y-3 text-sm font-bold text-slate-500">
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">0 - 2 Jaar</a></li>
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">3 - 5 Jaar</a></li>
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">6 - 8 Jaar</a></li>
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">9 - 12 Jaar</a></li>
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">12+ & Volwassenen</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Column 3: Brands -->
+                        <div>
+                            <h4 class="font-black text-slate-900 mb-4 flex items-center gap-2">
+                                <i data-lucide="star" size="18" class="text-action"></i> Top Merken
+                            </h4>
+                            <ul class="space-y-3 text-sm font-bold text-slate-500">
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">LEGO</a></li>
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">Barbie</a></li>
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">Playmobil</a></li>
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">Nintendo</a></li>
+                                <li><a href="#" class="hover:text-primary transition-colors block p-1 rounded hover:bg-slate-50">Ravensburger</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#" class="px-5 py-2.5 rounded-xl font-bold text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Beste Deals</a>
+                <a href="#" class="px-5 py-2.5 rounded-xl font-bold text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Cadeauzoeker</a>
             </div>
 
             <!-- Actions -->
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 md:gap-4">
                 <button class="hidden md:flex items-center gap-2 font-bold text-slate-700 hover:text-primary transition-colors bg-white px-4 py-2 rounded-xl border border-transparent hover:border-slate-200">
                     <i data-lucide="user" size="20"></i>
                     <span>Inloggen</span>
                 </button>
-                <button class="relative w-12 h-12 rounded-2xl bg-accent text-slate-900 flex items-center justify-center shadow-[4px_4px_0_#D4A017] hover:-translate-y-1 hover:shadow-[6px_6px_0_#D4A017] active:translate-y-0 active:shadow-none transition-all">
-                    <i data-lucide="shopping-bag" size="22" stroke-width="2.5"></i>
-                    <span class="absolute -top-2 -right-2 bg-action text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-white">3</span>
+                <button class="relative w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-accent text-slate-900 flex items-center justify-center shadow-[3px_3px_0_#D4A017] md:shadow-[4px_4px_0_#D4A017] hover:-translate-y-1 hover:shadow-[5px_5px_0_#D4A017] active:translate-y-0 active:shadow-none transition-all">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 md:w-6 md:h-6" stroke-width="2.5"></i>
+                    <span class="absolute -top-2 -right-2 bg-action text-white text-[10px] md:text-xs font-bold w-5 h-5 md:w-6 md:h-6 rounded-full flex items-center justify-center border-2 border-white">3</span>
                 </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay (Hidden by default) -->
+        <div id="mobile-menu" class="fixed inset-0 z-[100] bg-slate-900/50 hidden backdrop-blur-sm lg:hidden">
+            <div class="bg-white w-[85%] max-w-sm h-full shadow-2xl p-6 overflow-y-auto transform transition-transform translate-x-[-100%]" id="mobile-menu-content">
+                <div class="flex justify-between items-center mb-8">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+                           <i data-lucide="gamepad-2" size="18"></i>
+                        </div>
+                        <span class="text-xl font-black text-slate-900">Menu</span>
+                    </div>
+                    <button id="close-mobile-menu" class="p-2 text-slate-400 hover:text-slate-900">
+                        <i data-lucide="x" size="24"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Nav Links -->
+                <div class="space-y-4">
+                    <!-- Mobile Accordion for Categories -->
+                    <div class="border-b border-slate-100 pb-4">
+                        <button id="mobile-cat-toggle" class="flex justify-between items-center w-full font-black text-lg text-slate-900 mb-2">
+                            Categorieën <i data-lucide="chevron-down" size="20" class="transition-transform duration-300" id="mobile-cat-icon"></i>
+                        </button>
+                        <div id="mobile-cat-content" class="hidden pl-4 space-y-4 mt-2">
+                            <!-- Mobile Sub: Leeftijd -->
+                            <div>
+                                <h5 class="font-bold text-accent text-sm uppercase mb-2">Leeftijd</h5>
+                                <ul class="space-y-2 text-slate-600 font-medium">
+                                    <li><a href="#">0-2 Jaar</a></li>
+                                    <li><a href="#">3-5 Jaar</a></li>
+                                    <li><a href="#">6-12 Jaar</a></li>
+                                </ul>
+                            </div>
+                            <!-- Mobile Sub: Soort -->
+                            <div>
+                                <h5 class="font-bold text-primary text-sm uppercase mb-2">Soort</h5>
+                                <ul class="space-y-2 text-slate-600 font-medium">
+                                    <li><a href="#">LEGO & Bouwen</a></li>
+                                    <li><a href="#">Spellen</a></li>
+                                    <li><a href="#">Buiten</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="block font-black text-lg text-slate-900 border-b border-slate-100 pb-4">Beste Deals <span class="text-xs bg-action text-white px-2 py-0.5 rounded ml-2">HOT</span></a>
+                    <a href="#" class="block font-black text-lg text-slate-900 border-b border-slate-100 pb-4">Cadeauzoeker</a>
+                    <a href="#" class="block font-black text-lg text-slate-900 border-b border-slate-100 pb-4">Merken A-Z</a>
+                </div>
+                
+                <div class="mt-8">
+                    <button class="w-full bg-slate-100 text-slate-900 font-bold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-slate-200 transition-colors">
+                        <i data-lucide="user" size="18"></i> Inloggen / Registreren
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
 
-    <main class="relative z-10 pt-32 pb-20">
+    <main class="relative z-10 pt-28 md:pt-32 pb-20">
         
         <!-- HERO SECTION -->
-        <div class="max-w-[1440px] mx-auto px-6 md:px-8 mb-24">
-            <div class="flex flex-col lg:flex-row gap-16 items-center">
+        <div class="max-w-[1440px] mx-auto px-4 md:px-8 mb-16 md:mb-24">
+            <div class="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
                 
                 <!-- Left Content -->
-                <div class="flex-1 text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 text-primary font-bold text-sm mb-8 border border-blue-100">
-                        <i data-lucide="shield-check" size="18"></i>
-                        <span class="uppercase tracking-wide">100% Onafhankelijk Vergelijken</span>
+                <div class="flex-1 text-center lg:text-left w-full">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-lg bg-blue-50 text-primary font-bold text-xs md:text-sm mb-6 md:mb-8 border border-blue-100">
+                        <i data-lucide="shield-check" size="16"></i>
+                        <span class="uppercase tracking-wide">100% Onafhankelijk</span>
                     </div>
                     
-                    <h1 class="text-5xl md:text-7xl xl:text-8xl font-black text-slate-900 leading-[0.95] tracking-tight mb-8">
+                    <h1 class="text-4xl sm:text-5xl md:text-7xl xl:text-8xl font-black text-slate-900 leading-[0.95] tracking-tight mb-6 md:mb-8">
                         Betaal nooit meer <br class="hidden md:block"/>
                         <span class="relative inline-block text-primary">
                            te veel
-                           <svg class="absolute w-full h-3 bottom-1 left-0 text-accent z-[-1]" viewBox="0 0 100 10" preserveAspectRatio="none">
+                           <svg class="absolute w-full h-2 md:h-3 bottom-1 left-0 text-accent z-[-1]" viewBox="0 0 100 10" preserveAspectRatio="none">
                              <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" />
                            </svg>
                         </span> voor <br/>
                         speelgoed.
                     </h1>
                     
-                    <p class="text-xl text-slate-500 font-medium mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                        Wij scannen elke minuut <strong>Bol, Intertoys, Amazon</strong> en 50+ andere shops. Vind direct de laagste prijs.
+                    <p class="text-lg md:text-xl text-slate-500 font-medium mb-8 md:mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed px-4 lg:px-0">
+                        Wij scannen elke minuut <strong>Bol, Intertoys</strong> en 50+ andere shops. Vind direct de laagste prijs.
                     </p>
 
                     <!-- Search Bar -->
-                    <div id="search-container" class="relative max-w-xl mx-auto lg:mx-0 transition-transform duration-300 z-20">
-                        <div class="absolute inset-0 bg-slate-900 rounded-2xl translate-y-2 translate-x-2"></div>
-                        <div class="relative bg-white p-2 rounded-2xl border-2 border-slate-900 flex items-center">
-                           <div class="pl-4 pr-3 text-slate-400">
-                             <i data-lucide="search" size="24" stroke-width="3"></i>
+                    <div id="search-container" class="relative max-w-xl mx-auto lg:mx-0 transition-transform duration-300 z-20 px-2 lg:px-0">
+                        <div class="absolute inset-0 bg-slate-900 rounded-2xl translate-y-1.5 translate-x-1.5 md:translate-y-2 md:translate-x-2"></div>
+                        <div class="relative bg-white p-1.5 md:p-2 rounded-2xl border-2 border-slate-900 flex items-center">
+                           <div class="pl-3 md:pl-4 pr-2 md:pr-3 text-slate-400">
+                             <i data-lucide="search" class="w-5 h-5 md:w-6 md:h-6" stroke-width="3"></i>
                            </div>
                            <input 
                             id="search-input"
                             type="text" 
-                            placeholder="Waar zoek je naar?" 
-                            class="w-full bg-transparent border-none text-lg font-bold placeholder:text-slate-300 placeholder:font-bold focus:ring-0 outline-none text-slate-900 py-3"
+                            placeholder="Zoek LEGO, Barbie..." 
+                            class="w-full bg-transparent border-none text-base md:text-lg font-bold placeholder:text-slate-300 placeholder:font-bold focus:ring-0 outline-none text-slate-900 py-2 md:py-3"
                            />
-                           <button class="bg-primary hover:bg-[#008AC5] text-white px-6 py-3 rounded-xl font-bold text-lg transition-colors">
+                           <button class="bg-primary hover:bg-[#008AC5] text-white px-4 py-2 md:px-6 md:py-3 rounded-xl font-bold text-base md:text-lg transition-colors">
                               Zoek
                            </button>
                         </div>
                     </div>
 
-                    <!-- Trust Logos -->
-                    <div class="mt-12 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-                        <p class="text-xs font-bold uppercase text-slate-400 mb-4 tracking-wider">Wij vergelijken prijzen van:</p>
-                        <div class="flex flex-wrap justify-center lg:justify-start gap-8 items-center select-none">
-                           <span class="text-xl font-black text-slate-800">bol.</span>
-                           <span class="text-xl font-black text-slate-800 tracking-tighter">amazon</span>
-                           <span class="text-xl font-black text-primary italic">Intertoys</span>
-                           <span class="text-xl font-black text-red-600">DreamLand</span>
+                    <!-- Trust Logos - Better wrapping on mobile -->
+                    <div class="mt-10 md:mt-12 opacity-60 grayscale hover:grayscale-0 transition-all duration-500 px-4">
+                        <p class="text-[10px] md:text-xs font-bold uppercase text-slate-400 mb-4 tracking-wider">Wij vergelijken prijzen van:</p>
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-4 md:gap-8 items-center select-none">
+                           <span class="text-lg md:text-xl font-black text-slate-800">bol.</span>
+                           <span class="text-lg md:text-xl font-black text-slate-800 tracking-tighter">amazon</span>
+                           <span class="text-lg md:text-xl font-black text-primary italic">Intertoys</span>
+                           <span class="text-lg md:text-xl font-black text-red-600">DreamLand</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Visual - Interactive Card Stack -->
-                <div class="flex-1 relative w-full max-w-lg lg:max-w-none perspective-1000">
-                    
-                    <!-- Decorative Elements -->
+                <!-- Right Visual - Hidden on small mobile, visible on large -->
+                <div class="hidden md:block flex-1 relative w-full max-w-lg lg:max-w-none perspective-1000 mt-10 lg:mt-0">
                     <div class="absolute top-10 right-10 text-accent animate-bounce"><i data-lucide="sparkles" size="48"></i></div>
-                    <div class="absolute bottom-20 left-0 text-action animate-pulse"><i data-lucide="heart" size="32" fill="#E3004F"></i></div>
-
-                    <!-- Card 1: Background -->
                     <div class="absolute top-8 left-8 w-full h-full bg-accent rounded-[3rem] transform rotate-6 opacity-40 blur-sm"></div>
                     
-                    <!-- Card 2: Main Featured Product -->
                     <div class="relative bg-white rounded-[3rem] p-8 md:p-10 border-4 border-slate-100 shadow-2xl transform transition-transform hover:scale-[1.01] duration-500 animate-float">
                         <div class="absolute top-6 right-6 bg-action text-white font-bold px-4 py-2 rounded-full transform rotate-12 shadow-lg z-10">
                           -35% Korting!
                         </div>
-                        
                         <div class="bg-slate-50 rounded-3xl h-64 mb-8 flex items-center justify-center relative overflow-hidden group">
                            <div class="absolute inset-0 bg-[radial-gradient(circle,rgba(0,159,227,0.1)_0%,transparent_70%)]"></div>
                            <i data-lucide="car" size="140" class="text-slate-900 group-hover:scale-110 transition-transform duration-500" stroke-width="1.5"></i>
                         </div>
-
                         <div class="flex justify-between items-end mb-6">
                           <div>
                             <h3 class="text-2xl font-black text-slate-900 mb-2">LEGO Technic Raceauto</h3>
                             <div class="flex items-center gap-2 text-sm font-bold text-slate-500">
-                              <i data-lucide="star" size="16" class="text-accent fill-accent"></i> 4.9 (1.2k reviews)
+                              <i data-lucide="star" size="16" class="text-accent fill-accent"></i> 4.9 (1.2k)
                             </div>
                           </div>
                           <div class="text-right">
@@ -198,7 +324,6 @@
                             <span class="block text-4xl font-black text-primary">€ 84,50</span>
                           </div>
                         </div>
-
                         <button class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold text-lg hover:bg-slate-800 transition-colors flex items-center justify-center gap-2">
                           Vergelijk 12 Aanbieders <i data-lucide="arrow-right" size="20"></i>
                         </button>
@@ -207,99 +332,102 @@
             </div>
         </div>
 
-        <!-- SHOP BY AGE - Crucial for UX -->
-        <section class="mb-24 px-6">
-            <div class="max-w-[1440px] mx-auto">
-                <div class="text-center mb-10">
-                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-3">Voor wie koop je?</h2>
-                    <p class="text-slate-500 font-medium">Kies een leeftijd en zie direct de populairste cadeaus.</p>
+        <!-- SHOP BY AGE - Horizontal Scroll on Mobile -->
+        <section class="mb-16 md:mb-24">
+            <div class="max-w-[1440px] mx-auto px-4 md:px-8">
+                <div class="text-center mb-8 md:mb-10">
+                    <h2 class="text-2xl md:text-4xl font-black text-slate-900 mb-2 md:mb-3">Voor wie koop je?</h2>
+                    <p class="text-slate-500 font-medium text-sm md:text-base">Kies een leeftijd en zie direct de populairste cadeaus.</p>
                 </div>
                 
-                <div class="flex flex-wrap justify-center gap-4 md:gap-8">
+                <!-- Scroll Container for Mobile -->
+                <div class="flex overflow-x-auto gap-4 md:gap-8 pb-6 px-4 -mx-4 md:mx-0 md:justify-center md:flex-wrap hide-scrollbar snap-x snap-mandatory">
                     <!-- 0-2 Jaar -->
-                    <div class="group cursor-pointer flex flex-col items-center gap-3">
-                        <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-green-100 text-green-600 flex items-center justify-center border-4 border-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
-                            <i data-lucide="baby" size="32"></i>
+                    <div class="group cursor-pointer flex flex-col items-center gap-3 min-w-[100px] snap-center">
+                        <div class="w-20 h-20 md:w-32 md:h-32 rounded-full bg-green-100 text-green-600 flex items-center justify-center border-4 border-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
+                            <i data-lucide="baby" class="w-8 h-8 md:w-10 md:h-10"></i>
                         </div>
-                        <span class="font-bold text-slate-700 group-hover:text-slate-900">0-2 Jaar</span>
+                        <span class="font-bold text-sm md:text-base text-slate-700 group-hover:text-slate-900">0-2 Jaar</span>
                     </div>
                     <!-- 3-5 Jaar -->
-                    <div class="group cursor-pointer flex flex-col items-center gap-3">
-                        <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center border-4 border-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
-                            <i data-lucide="blocks" size="32"></i>
+                    <div class="group cursor-pointer flex flex-col items-center gap-3 min-w-[100px] snap-center">
+                        <div class="w-20 h-20 md:w-32 md:h-32 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center border-4 border-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
+                            <i data-lucide="blocks" class="w-8 h-8 md:w-10 md:h-10"></i>
                         </div>
-                        <span class="font-bold text-slate-700 group-hover:text-slate-900">3-5 Jaar</span>
+                        <span class="font-bold text-sm md:text-base text-slate-700 group-hover:text-slate-900">3-5 Jaar</span>
                     </div>
                     <!-- 6-8 Jaar -->
-                    <div class="group cursor-pointer flex flex-col items-center gap-3">
-                        <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center border-4 border-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
-                            <i data-lucide="car" size="32"></i>
+                    <div class="group cursor-pointer flex flex-col items-center gap-3 min-w-[100px] snap-center">
+                        <div class="w-20 h-20 md:w-32 md:h-32 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center border-4 border-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
+                            <i data-lucide="car" class="w-8 h-8 md:w-10 md:h-10"></i>
                         </div>
-                        <span class="font-bold text-slate-700 group-hover:text-slate-900">6-8 Jaar</span>
+                        <span class="font-bold text-sm md:text-base text-slate-700 group-hover:text-slate-900">6-8 Jaar</span>
                     </div>
                     <!-- 9-12 Jaar -->
-                    <div class="group cursor-pointer flex flex-col items-center gap-3">
-                        <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center border-4 border-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
-                            <i data-lucide="gamepad-2" size="32"></i>
+                    <div class="group cursor-pointer flex flex-col items-center gap-3 min-w-[100px] snap-center">
+                        <div class="w-20 h-20 md:w-32 md:h-32 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center border-4 border-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
+                            <i data-lucide="gamepad-2" class="w-8 h-8 md:w-10 md:h-10"></i>
                         </div>
-                        <span class="font-bold text-slate-700 group-hover:text-slate-900">9-12 Jaar</span>
+                        <span class="font-bold text-sm md:text-base text-slate-700 group-hover:text-slate-900">9-12 Jaar</span>
                     </div>
                     <!-- 12+ Jaar -->
-                    <div class="group cursor-pointer flex flex-col items-center gap-3">
-                        <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-red-100 text-red-600 flex items-center justify-center border-4 border-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
-                            <i data-lucide="zap" size="32"></i>
+                    <div class="group cursor-pointer flex flex-col items-center gap-3 min-w-[100px] snap-center">
+                        <div class="w-20 h-20 md:w-32 md:h-32 rounded-full bg-red-100 text-red-600 flex items-center justify-center border-4 border-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl">
+                            <i data-lucide="zap" class="w-8 h-8 md:w-10 md:h-10"></i>
                         </div>
-                        <span class="font-bold text-slate-700 group-hover:text-slate-900">12+ Jaar</span>
+                        <span class="font-bold text-sm md:text-base text-slate-700 group-hover:text-slate-900">12+ Jaar</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- FLASH DEALS - Horizontal Scroll -->
-        <section class="bg-slate-900 text-white py-16 mb-24 overflow-hidden relative">
-            <!-- Animated Ticker Background -->
+        <!-- BESTE DEALS (Updated from Flash Deals) - Horizontal Scroll on Mobile -->
+        <section class="bg-slate-900 text-white py-12 md:py-16 mb-16 md:mb-24 overflow-hidden relative">
             <div class="absolute top-0 left-0 w-full h-full opacity-10 flex items-center justify-center pointer-events-none overflow-hidden whitespace-nowrap select-none">
-                 <span class="text-[20vw] font-black leading-none animate-pulse">FLASH SALE</span>
+                 <span class="text-[20vw] font-black leading-none animate-pulse">BESTE DEALS</span>
             </div>
 
-            <div class="max-w-[1440px] mx-auto px-6 relative z-10">
-                <div class="flex justify-between items-end mb-10">
+            <div class="max-w-[1440px] mx-auto px-4 md:px-8 relative z-10">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-10 gap-4">
                    <div>
                      <div class="flex items-center gap-3 mb-2 text-accent">
-                        <i data-lucide="clock" class="animate-pulse"></i>
-                        <span class="font-bold tracking-widest uppercase text-sm">Alleen vandaag</span>
+                        <i data-lucide="sparkles" class="animate-pulse"></i>
+                        <span class="font-bold tracking-widest uppercase text-xs md:text-sm">Vers van de pers</span>
                      </div>
-                     <h2 class="text-4xl md:text-5xl font-black">Dag Deals</h2>
+                     <h2 class="text-3xl md:text-5xl font-black">Beste Deals</h2>
                    </div>
-                   <a href="#" class="hidden md:flex items-center gap-2 font-bold text-accent hover:text-white transition-colors">
+                   <a href="#" class="flex items-center gap-2 font-bold text-accent hover:text-white transition-colors text-sm md:text-base">
                      Bekijk alle deals <i data-lucide="arrow-right" size="20"></i>
                    </a>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Deal 1 -->
-                    <div class="bg-white text-slate-900 rounded-3xl p-5 hover:-translate-y-2 transition-transform duration-300 cursor-pointer group">
-                        <div class="relative bg-slate-100 rounded-2xl h-48 mb-4 flex items-center justify-center overflow-hidden">
+                <!-- Grid/Scroll wrapper - Added 4th Item -->
+                <div class="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 pb-6 -mx-4 px-4 md:mx-0 md:px-0 md:pb-0 snap-x snap-mandatory hide-scrollbar">
+                    
+                    <!-- Deal Card 1 -->
+                    <div class="min-w-[280px] md:min-w-0 bg-white text-slate-900 rounded-3xl p-5 transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl cursor-pointer group snap-center">
+                        <div class="relative bg-slate-100 rounded-2xl h-40 md:h-48 mb-4 flex items-center justify-center overflow-hidden">
                             <div class="absolute top-3 left-3 bg-action text-white text-xs font-black px-2 py-1 rounded">-40%</div>
                             <i data-lucide="gift" size="64" class="text-slate-300 group-hover:scale-110 transition-transform"></i>
                         </div>
                         <h3 class="font-bold text-lg mb-1 leading-tight">Barbie Dreamhouse 2025</h3>
                         <div class="flex items-center gap-2 text-xs text-slate-500 mb-4">
-                            <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold">Laagste prijs ooit</span>
+                            <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold">Laagste prijs</span>
                         </div>
                         <div class="flex justify-between items-center border-t border-slate-100 pt-4">
                             <div class="flex flex-col">
                                 <span class="text-xs text-slate-400 line-through">€ 89,99</span>
                                 <span class="text-2xl font-black text-primary">€ 54,00</span>
                             </div>
-                            <button class="bg-accent p-2.5 rounded-xl text-slate-900 hover:scale-110 transition-transform shadow-sm">
+                            <button class="bg-accent p-2 rounded-xl text-slate-900 hover:scale-110 transition-transform shadow-sm">
                                 <i data-lucide="arrow-right" size="20"></i>
                             </button>
                         </div>
                     </div>
-                    <!-- Deal 2 -->
-                    <div class="bg-white text-slate-900 rounded-3xl p-5 hover:-translate-y-2 transition-transform duration-300 cursor-pointer group">
-                        <div class="relative bg-slate-100 rounded-2xl h-48 mb-4 flex items-center justify-center overflow-hidden">
+
+                    <!-- Deal Card 2 -->
+                    <div class="min-w-[280px] md:min-w-0 bg-white text-slate-900 rounded-3xl p-5 transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl cursor-pointer group snap-center">
+                        <div class="relative bg-slate-100 rounded-2xl h-40 md:h-48 mb-4 flex items-center justify-center overflow-hidden">
                             <div class="absolute top-3 left-3 bg-action text-white text-xs font-black px-2 py-1 rounded">-25%</div>
                             <i data-lucide="gamepad-2" size="64" class="text-slate-300 group-hover:scale-110 transition-transform"></i>
                         </div>
@@ -312,14 +440,15 @@
                                 <span class="text-xs text-slate-400 line-through">€ 349,00</span>
                                 <span class="text-2xl font-black text-primary">€ 289,00</span>
                             </div>
-                            <button class="bg-accent p-2.5 rounded-xl text-slate-900 hover:scale-110 transition-transform shadow-sm">
+                            <button class="bg-accent p-2 rounded-xl text-slate-900 hover:scale-110 transition-transform shadow-sm">
                                 <i data-lucide="arrow-right" size="20"></i>
                             </button>
                         </div>
                     </div>
-                    <!-- Deal 3 -->
-                    <div class="bg-white text-slate-900 rounded-3xl p-5 hover:-translate-y-2 transition-transform duration-300 cursor-pointer group">
-                        <div class="relative bg-slate-100 rounded-2xl h-48 mb-4 flex items-center justify-center overflow-hidden">
+
+                    <!-- Deal Card 3 -->
+                    <div class="min-w-[280px] md:min-w-0 bg-white text-slate-900 rounded-3xl p-5 transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl cursor-pointer group snap-center">
+                        <div class="relative bg-slate-100 rounded-2xl h-40 md:h-48 mb-4 flex items-center justify-center overflow-hidden">
                             <div class="absolute top-3 left-3 bg-action text-white text-xs font-black px-2 py-1 rounded">-15%</div>
                             <i data-lucide="blocks" size="64" class="text-slate-300 group-hover:scale-110 transition-transform"></i>
                         </div>
@@ -332,27 +461,28 @@
                                 <span class="text-xs text-slate-400 line-through">€ 149,99</span>
                                 <span class="text-2xl font-black text-primary">€ 127,50</span>
                             </div>
-                            <button class="bg-accent p-2.5 rounded-xl text-slate-900 hover:scale-110 transition-transform shadow-sm">
+                            <button class="bg-accent p-2 rounded-xl text-slate-900 hover:scale-110 transition-transform shadow-sm">
                                 <i data-lucide="arrow-right" size="20"></i>
                             </button>
                         </div>
                     </div>
-                    <!-- Deal 4 -->
-                    <div class="bg-white text-slate-900 rounded-3xl p-5 hover:-translate-y-2 transition-transform duration-300 cursor-pointer group">
-                        <div class="relative bg-slate-100 rounded-2xl h-48 mb-4 flex items-center justify-center overflow-hidden">
-                            <div class="absolute top-3 left-3 bg-action text-white text-xs font-black px-2 py-1 rounded">-50%</div>
+
+                    <!-- Deal Card 4 (Added) -->
+                    <div class="min-w-[280px] md:min-w-0 bg-white text-slate-900 rounded-3xl p-5 transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl cursor-pointer group snap-center">
+                        <div class="relative bg-slate-100 rounded-2xl h-40 md:h-48 mb-4 flex items-center justify-center overflow-hidden">
+                            <div class="absolute top-3 left-3 bg-action text-white text-xs font-black px-2 py-1 rounded">-30%</div>
                             <i data-lucide="car" size="64" class="text-slate-300 group-hover:scale-110 transition-transform"></i>
                         </div>
-                        <h3 class="font-bold text-lg mb-1 leading-tight">Hot Wheels Garage</h3>
+                        <h3 class="font-bold text-lg mb-1 leading-tight">Playmobil Politiebureau</h3>
                         <div class="flex items-center gap-2 text-xs text-slate-500 mb-4">
-                            <span class="bg-red-100 text-red-700 px-2 py-0.5 rounded font-bold">Laatste kans</span>
+                            <span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded font-bold">Klassieker</span>
                         </div>
                         <div class="flex justify-between items-center border-t border-slate-100 pt-4">
                             <div class="flex flex-col">
                                 <span class="text-xs text-slate-400 line-through">€ 99,99</span>
-                                <span class="text-2xl font-black text-primary">€ 49,95</span>
+                                <span class="text-2xl font-black text-primary">€ 69,95</span>
                             </div>
-                            <button class="bg-accent p-2.5 rounded-xl text-slate-900 hover:scale-110 transition-transform shadow-sm">
+                            <button class="bg-accent p-2 rounded-xl text-slate-900 hover:scale-110 transition-transform shadow-sm">
                                 <i data-lucide="arrow-right" size="20"></i>
                             </button>
                         </div>
@@ -361,14 +491,13 @@
             </div>
         </section>
 
-        <!-- POPULAR CATEGORIES - Grid -->
-        <section class="max-w-[1440px] mx-auto px-6 mb-24">
-            <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-10 text-center md:text-left">Populaire Categorieën</h2>
+        <!-- POPULAR CATEGORIES - Stack on Mobile -->
+        <section class="max-w-[1440px] mx-auto px-4 md:px-8 mb-16 md:mb-24">
+            <h2 class="text-2xl md:text-4xl font-black text-slate-900 mb-8 md:mb-10 text-center md:text-left">Populaire Categorieën</h2>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 <!-- Large Card 1 -->
-                <div class="transition-all duration-300 hover:-translate-y-2 hover:shadow-xl bg-blue-50 rounded-[2.5rem] p-8 relative overflow-hidden group cursor-pointer border-2 border-blue-100">
+                <div class="h-[300px] md:h-auto bg-blue-50 rounded-[2.5rem] p-8 relative overflow-hidden group cursor-pointer border-2 border-blue-100 hover:shadow-xl transition-all">
                    <div class="relative z-10">
                      <h3 class="text-3xl font-black text-slate-900 mb-2">LEGO</h3>
                      <p class="text-slate-600 mb-6 font-medium">Van Harry Potter tot Star Wars.</p>
@@ -380,7 +509,7 @@
                 </div>
 
                 <!-- Large Card 2 -->
-                <div class="transition-all duration-300 hover:-translate-y-2 hover:shadow-xl bg-pink-50 rounded-[2.5rem] p-8 relative overflow-hidden group cursor-pointer border-2 border-pink-100">
+                <div class="h-[300px] md:h-auto bg-pink-50 rounded-[2.5rem] p-8 relative overflow-hidden group cursor-pointer border-2 border-pink-100 hover:shadow-xl transition-all">
                    <div class="relative z-10">
                      <h3 class="text-3xl font-black text-slate-900 mb-2">Poppen</h3>
                      <p class="text-slate-600 mb-6 font-medium">Barbie, L.O.L. Surprise & meer.</p>
@@ -392,57 +521,99 @@
                 </div>
 
                 <!-- Stacked Cards -->
-                <div class="flex flex-col gap-6">
-                   <div class="transition-all duration-300 hover:-translate-y-2 hover:shadow-xl flex-1 bg-yellow-50 rounded-[2.5rem] p-6 flex items-center justify-between border-2 border-yellow-100 cursor-pointer group">
+                <div class="flex flex-col gap-4 md:gap-6">
+                   <div class="flex-1 bg-yellow-50 rounded-[2.5rem] p-6 flex items-center justify-between border-2 border-yellow-100 cursor-pointer group hover:shadow-xl transition-all">
                       <div>
-                        <h3 class="text-xl font-black mb-1">Gezelschapsspellen</h3>
-                        <p class="text-sm text-slate-600 font-bold text-yellow-700">Top 10 Catan aanbiedingen</p>
+                        <h3 class="text-xl font-black mb-1">Spellen</h3>
+                        <p class="text-sm text-slate-600 font-bold text-yellow-700">Top 10 Catan</p>
                       </div>
                       <i data-lucide="award" size="48" class="text-yellow-400 group-hover:scale-110 transition-transform"></i>
                    </div>
-                   <div class="transition-all duration-300 hover:-translate-y-2 hover:shadow-xl flex-1 bg-green-50 rounded-[2.5rem] p-6 flex items-center justify-between border-2 border-green-100 cursor-pointer group">
+                   <div class="flex-1 bg-green-50 rounded-[2.5rem] p-6 flex items-center justify-between border-2 border-green-100 cursor-pointer group hover:shadow-xl transition-all">
                       <div>
-                        <h3 class="text-xl font-black mb-1">Buitenspeelgoed</h3>
-                        <p class="text-sm text-slate-600 font-bold text-green-700">Trampolines & Zwembaden</p>
+                        <h3 class="text-xl font-black mb-1">Buiten</h3>
+                        <p class="text-sm text-slate-600 font-bold text-green-700">Trampolines</p>
                       </div>
                       <i data-lucide="trending-up" size="48" class="text-green-400 group-hover:scale-110 transition-transform"></i>
                    </div>
                 </div>
-
             </div>
         </section>
 
-        <!-- VALUE PROPOSITION & NEWSLETTER -->
-        <section class="px-6 mb-20">
-            <div class="max-w-[1440px] mx-auto bg-slate-900 rounded-[3rem] p-8 md:p-16 text-center relative overflow-hidden">
+        <!-- GIFT FINDER SECTION (New) -->
+        <section class="max-w-[1440px] mx-auto px-4 md:px-8 mb-16 md:mb-24">
+            <div class="relative bg-gradient-to-r from-action to-pink-600 rounded-[2.5rem] p-8 md:p-12 overflow-hidden shadow-2xl">
+                <!-- Decorative BG elements -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-yellow-300 opacity-20 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+
+                <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="text-center md:text-left text-white max-w-2xl">
+                        <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-sm font-bold mb-4 border border-white/20">
+                            <i data-lucide="sparkles" size="16"></i> Keuzestress?
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-black mb-4 leading-tight">
+                            Vind het perfecte cadeau <br class="hidden md:block"> in <span class="text-accent underline decoration-4 underline-offset-4 decoration-white/30">3 klikken</span>.
+                        </h2>
+                        <p class="text-lg md:text-xl text-pink-100 font-medium mb-8">
+                            Geen inspiratie? Onze slimme cadeauzoeker helpt je direct aan de beste tips voor elke leeftijd en budget.
+                        </p>
+                        <a href="#" class="inline-flex items-center gap-2 bg-white text-action px-8 py-4 rounded-2xl font-black text-lg shadow-lg transition-all duration-300 ease-out hover:scale-105 hover:bg-slate-50 hover:shadow-xl">
+                            Start Cadeauzoeker <i data-lucide="arrow-right" size="20"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Visual -->
+                    <div class="relative w-full md:w-auto flex justify-center">
+                        <div class="relative w-48 h-48 md:w-64 md:h-64 bg-white/10 backdrop-blur-sm rounded-full border-4 border-white/20 flex items-center justify-center animate-float">
+                            <i data-lucide="gift" size="100" class="text-white drop-shadow-lg"></i>
+                            <div class="absolute -top-4 -right-4 bg-accent text-slate-900 font-bold px-4 py-2 rounded-xl shadow-lg transform rotate-12">
+                                Cadeautip!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACCOUNT SECTION (Replaced Newsletter) -->
+        <section class="px-4 md:px-6 mb-16 md:mb-20">
+            <div class="max-w-[1440px] mx-auto bg-slate-900 rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 text-center relative overflow-hidden">
                  
-                 <!-- Abstract Shapes -->
                  <div class="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
                     <div class="absolute top-[-50%] left-[-20%] w-[800px] h-[800px] bg-primary rounded-full blur-[100px]"></div>
                     <div class="absolute bottom-[-50%] right-[-20%] w-[800px] h-[800px] bg-action rounded-full blur-[100px]"></div>
                  </div>
 
                  <div class="relative z-10 max-w-3xl mx-auto">
-                   <h2 class="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
-                     Mis nooit meer een <span class="text-accent underline decoration-4 decoration-action">prijsfoutje</span>.
+                   <h2 class="text-3xl md:text-5xl font-black text-white mb-4 md:mb-6 leading-tight">
+                     Slimmer shoppen begint hier.
                    </h2>
-                   <p class="text-slate-300 text-lg md:text-xl font-medium mb-10 leading-relaxed">
-                     Schrijf je in voor de ToyCompare Alert. Wij sturen je alleen een mailtje als de prijs van populair speelgoed drastisch zakt.
+                   <p class="text-slate-300 text-base md:text-xl font-medium mb-8 md:mb-10 leading-relaxed max-w-2xl mx-auto">
+                     Maak een gratis account aan om <span class="text-white font-bold">prijsalerts per product</span> in te stellen, verlanglijstjes te maken en je favorieten op elk apparaat te bekijken.
                    </p>
 
-                   <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
-                     <input 
-                       type="email" 
-                       placeholder="Jouw e-mailadres" 
-                       class="flex-1 bg-white/10 border-2 border-white/10 rounded-2xl px-6 py-4 text-white font-bold placeholder:text-slate-400 focus:bg-white/20 focus:border-accent outline-none transition-all"
-                     />
-                     <button class="bg-accent hover:bg-[#FFD633] text-slate-900 px-6 py-3 md:px-8 md:py-4 rounded-2xl font-black text-lg transition-all shadow-[0_6px_0_#D4A017] hover:shadow-[0_8px_0_#D4A017] hover:translate-y-[-2px] active:translate-y-[2px] active:shadow-none flex items-center justify-center gap-2 tracking-tight group">
-                       Meld mij aan <i data-lucide="chevron-right" size="20" stroke-width="3"></i>
+                   <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                     <button class="bg-accent hover:bg-[#FFD633] text-slate-900 px-8 py-4 rounded-2xl font-black text-lg transition-all duration-300 ease-out flex items-center justify-center gap-2 shadow-[0_4px_0_#D4A017] hover:translate-y-[-2px] hover:shadow-[0_6px_0_#D4A017] active:translate-y-0 active:shadow-none w-full sm:w-auto">
+                       <i data-lucide="user-plus" size="20" stroke-width="3"></i> Gratis Account Aanmaken
                      </button>
+                     <a href="#" class="text-slate-400 font-bold hover:text-white transition-colors underline decoration-slate-600 underline-offset-4">
+                         Al een account? Inloggen
+                     </a>
                    </div>
-                   <p class="text-slate-500 text-xs font-bold mt-6 uppercase tracking-wide flex items-center justify-center gap-1">
-                     <i data-lucide="shield-check" size="14"></i> Geen spam, altijd opzegbaar.
-                   </p>
+                   
+                   <div class="flex flex-wrap justify-center gap-4 md:gap-8 mt-10 opacity-60">
+                       <div class="flex items-center gap-2 text-slate-300 font-bold text-sm">
+                           <i data-lucide="bell" size="16"></i> Prijsalerts
+                       </div>
+                       <div class="flex items-center gap-2 text-slate-300 font-bold text-sm">
+                           <i data-lucide="heart" size="16"></i> Verlanglijstjes
+                       </div>
+                       <div class="flex items-center gap-2 text-slate-300 font-bold text-sm">
+                           <i data-lucide="smartphone" size="16"></i> Altijd gesynchroniseerd
+                       </div>
+                   </div>
                  </div>
             </div>
         </section>
@@ -450,63 +621,58 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 pt-20 pb-10">
+    <footer class="bg-white border-t border-slate-200 pt-16 pb-8">
         <div class="max-w-[1440px] mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
+            <div class="flex flex-col md:flex-row justify-between gap-12 mb-12">
                 <div class="max-w-xs">
-                    <div class="flex items-center gap-2 mb-6">
+                    <div class="flex items-center gap-2 mb-4">
                         <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-slate-900 shadow-[4px_4px_0_black] border-2 border-black">
                            <i data-lucide="gamepad-2" size="20" stroke-width="2.5"></i>
                         </div>
-                        <span class="text-2xl font-black text-slate-900">ToyCompare</span>
+                        <span class="text-2xl font-black text-slate-900">SpeelgoedPrijzen.nl</span>
                     </div>
-                    <p class="text-slate-500 font-medium leading-relaxed">
-                        Wij helpen ouders, ooms, tantes en opa's & oma's de beste speelgoed deals te vinden. 100% onafhankelijk.
+                    <p class="text-slate-500 font-medium text-sm">
+                        De onafhankelijke vergelijker voor de beste speelgoed deals in Nederland & België.
                     </p>
                 </div>
                 
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-12">
+                <div class="grid grid-cols-2 gap-8 text-sm">
                    <div>
-                     <h4 class="font-black text-slate-900 mb-6 text-lg">Winkelen</h4>
-                     <ul class="space-y-4 font-bold text-slate-500">
-                       <li><a href="#" class="hover:text-primary transition-colors">Alle Categorieën</a></li>
-                       <li><a href="#" class="hover:text-primary transition-colors">Merken A-Z</a></li>
-                       <li><a href="#" class="hover:text-primary transition-colors">Winkels</a></li>
-                       <li><a href="#" class="hover:text-primary transition-colors text-action">Black Friday Deals</a></li>
+                     <h4 class="font-black text-slate-900 mb-4">Winkelen</h4>
+                     <ul class="space-y-3 font-bold text-slate-500">
+                       <li><a href="#" class="hover:text-primary">Categorieën</a></li>
+                       <li><a href="#" class="hover:text-primary">Merken</a></li>
+                       <li><a href="#" class="hover:text-primary text-action">Sale</a></li>
                      </ul>
                    </div>
                    <div>
-                     <h4 class="font-black text-slate-900 mb-6 text-lg">Hulp nodig?</h4>
-                     <ul class="space-y-4 font-bold text-slate-500">
-                       <li><a href="#" class="hover:text-primary transition-colors">Cadeauwijzer</a></li>
-                       <li><a href="#" class="hover:text-primary transition-colors">Veelgestelde vragen</a></li>
-                       <li><a href="#" class="hover:text-primary transition-colors">Over ons</a></li>
-                       <li><a href="#" class="hover:text-primary transition-colors">Contact</a></li>
+                     <h4 class="font-black text-slate-900 mb-4">Service</h4>
+                     <ul class="space-y-3 font-bold text-slate-500">
+                       <li><a href="#" class="hover:text-primary">Contact</a></li>
+                       <li><a href="#" class="hover:text-primary">Over ons</a></li>
                      </ul>
                    </div>
                 </div>
             </div>
             
-            <div class="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-bold text-slate-400">
-                <span>© 2025 ToyCompare BV. Alle rechten voorbehouden.</span>
-                <div class="flex gap-6">
+            <div class="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-slate-400">
+                <span>© 2025 SpeelgoedPrijzen.nl</span>
+                <div class="flex gap-4">
                     <a href="#" class="hover:text-slate-900">Privacy</a>
                     <a href="#" class="hover:text-slate-900">Cookies</a>
-                    <a href="#" class="hover:text-slate-900">Voorwaarden</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Initialize Scripts -->
+    <!-- Scripts -->
     <script>
-        // Initialize Lucide Icons
         lucide.createIcons();
 
         // Navbar Scroll Effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
+            if (window.scrollY > 10) {
                 navbar.classList.remove('bg-transparent', 'py-5');
                 navbar.classList.add('bg-white/90', 'backdrop-blur-xl', 'border-b', 'border-slate-200', 'py-3', 'shadow-sm');
             } else {
@@ -515,17 +681,51 @@
             }
         });
 
-        // Search Focus Effect
+        // Search Animation
         const searchInput = document.getElementById('search-input');
         const searchContainer = document.getElementById('search-container');
-        
-        searchInput.addEventListener('focus', () => {
-            searchContainer.classList.add('scale-[1.02]');
+        searchInput.addEventListener('focus', () => searchContainer.classList.add('scale-[1.02]'));
+        searchInput.addEventListener('blur', () => searchContainer.classList.remove('scale-[1.02]'));
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMobileMenu = document.getElementById('close-mobile-menu');
+        const mobileMenuContent = document.getElementById('mobile-menu-content');
+
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                // Small timeout to allow transition
+                setTimeout(() => {
+                    mobileMenuContent.classList.remove('translate-x-[-100%]');
+                }, 10);
+            } else {
+                mobileMenuContent.classList.add('translate-x-[-100%]');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        closeMobileMenu.addEventListener('click', toggleMenu);
+        // Close when clicking outside content
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) toggleMenu();
         });
-        
-        searchInput.addEventListener('blur', () => {
-            searchContainer.classList.remove('scale-[1.02]');
+
+        // Mobile Categories Accordion
+        const catToggle = document.getElementById('mobile-cat-toggle');
+        const catContent = document.getElementById('mobile-cat-content');
+        const catIcon = document.getElementById('mobile-cat-icon');
+
+        catToggle.addEventListener('click', () => {
+            catContent.classList.toggle('hidden');
+            catIcon.classList.toggle('rotate-180');
         });
+
     </script>
 </body>
 </html>
