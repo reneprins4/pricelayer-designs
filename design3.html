@@ -1,0 +1,396 @@
+import React, { useState, useEffect } from 'react';
+import { Search, ShoppingBag, User, Zap, Gift, Gamepad2, Blocks, Car, Award, ArrowRight, Star, TrendingUp, Sparkles, Heart, Clock, ChevronRight, Truck, ShieldCheck, Percent, Baby } from 'lucide-react';
+
+const App = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
+
+  // Handle scroll effect for navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Design Tokens
+  const colors = {
+    primary: '#009FE3', // Intertoys Blue
+    accent: '#FFCC00',  // Vivid Yellow
+    action: '#E3004F',  // Playful Pink
+    bg: '#F8FAFC'       // Clean Slate
+  };
+
+  const buttonPrimary = `bg-[#FFCC00] hover:bg-[#FFD633] text-slate-900 px-6 py-3 md:px-8 md:py-4 rounded-2xl font-black text-lg transition-all shadow-[0_6px_0_#D4A017] hover:shadow-[0_8px_0_#D4A017] hover:translate-y-[-2px] active:translate-y-[2px] active:shadow-none flex items-center justify-center gap-2 tracking-tight group`;
+  
+  const cardHover = "transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_15px_30px_-10px_rgba(0,0,0,0.1)]";
+
+  return (
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans selection:bg-[#FFCC00] selection:text-black overflow-x-hidden relative">
+      
+      {/* Dynamic Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <svg className="absolute top-0 left-0 w-full h-full opacity-[0.03]" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <pattern id="grid" width="8" height="8" patternUnits="userSpaceOnUse">
+            <path d="M 8 0 L 0 0 0 8" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+          </pattern>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+        <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-blue-400/10 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-yellow-400/10 rounded-full blur-[120px]"></div>
+      </div>
+
+      {/* Navbar */}
+      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-xl border-b border-slate-200 py-3 shadow-sm' : 'bg-transparent py-5'}`}>
+        <div className="max-w-[1440px] mx-auto px-6 md:px-8 flex items-center justify-between">
+          
+          <div className="flex items-center gap-2 group cursor-pointer">
+            <div className="relative w-10 h-10 md:w-12 md:h-12 bg-[#009FE3] rounded-xl flex items-center justify-center text-white shadow-[4px_4px_0_#007BB0] group-hover:translate-y-[-2px] group-hover:shadow-[6px_6px_0_#007BB0] transition-all">
+               <Gamepad2 size={24} strokeWidth={2.5} />
+            </div>
+            <span className="text-xl md:text-2xl font-black tracking-tighter text-slate-900 ml-1">
+              Toy<span className="text-[#009FE3]">Compare</span>
+            </span>
+          </div>
+
+          <div className="hidden lg:flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm">
+            {['Categorieën', 'Leeftijd', 'Merken', 'Sale %'].map((item) => (
+              <a key={item} href="#" className="px-5 py-2.5 rounded-xl font-bold text-slate-600 hover:bg-slate-50 hover:text-[#009FE3] transition-colors">
+                {item}
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-4">
+            <button className="hidden md:flex items-center gap-2 font-bold text-slate-700 hover:text-[#009FE3] transition-colors bg-white px-4 py-2 rounded-xl border border-transparent hover:border-slate-200">
+              <User size={20} />
+              <span>Inloggen</span>
+            </button>
+            <button className="relative w-12 h-12 rounded-2xl bg-[#FFCC00] text-slate-900 flex items-center justify-center shadow-[4px_4px_0_#D4A017] hover:-translate-y-1 hover:shadow-[6px_6px_0_#D4A017] active:translate-y-0 active:shadow-none transition-all">
+              <ShoppingBag size={22} strokeWidth={2.5} />
+              <span className="absolute -top-2 -right-2 bg-[#E3004F] text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-white">3</span>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <main className="relative z-10 pt-32 pb-20">
+        
+        {/* HERO SECTION */}
+        <div className="max-w-[1440px] mx-auto px-6 md:px-8 mb-24">
+          <div className="flex flex-col lg:flex-row gap-16 items-center">
+            
+            {/* Left Content */}
+            <div className="flex-1 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 text-[#009FE3] font-bold text-sm mb-8 border border-blue-100">
+                <ShieldCheck size={18} />
+                <span className="uppercase tracking-wide">100% Onafhankelijk Vergelijken</span>
+              </div>
+              
+              <h1 className="text-5xl md:text-7xl xl:text-8xl font-black text-slate-900 leading-[0.95] tracking-tight mb-8">
+                Betaal nooit meer <br className="hidden md:block"/>
+                <span className="relative inline-block text-[#009FE3]">
+                   te veel
+                   <svg className="absolute w-full h-3 bottom-1 left-0 text-[#FFCC00] z-[-1]" viewBox="0 0 100 10" preserveAspectRatio="none">
+                     <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="8" fill="none" />
+                   </svg>
+                </span> voor <br/>
+                speelgoed.
+              </h1>
+              
+              <p className="text-xl text-slate-500 font-medium mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                Wij scannen elke minuut <strong>Bol, Intertoys, Amazon</strong> en 50+ andere shops. Vind direct de laagste prijs.
+              </p>
+
+              {/* Search Bar */}
+              <div className={`relative max-w-xl mx-auto lg:mx-0 ${searchFocused ? 'scale-[1.02]' : ''} transition-transform duration-300 z-20`}>
+                <div className="absolute inset-0 bg-slate-900 rounded-2xl translate-y-2 translate-x-2"></div>
+                <div className="relative bg-white p-2 rounded-2xl border-2 border-slate-900 flex items-center">
+                   <div className="pl-4 pr-3 text-slate-400">
+                     <Search size={24} strokeWidth={3} />
+                   </div>
+                   <input 
+                    type="text" 
+                    placeholder="Waar zoek je naar?" 
+                    className="w-full bg-transparent border-none text-lg font-bold placeholder:text-slate-300 placeholder:font-bold focus:ring-0 outline-none text-slate-900 py-3"
+                    onFocus={() => setSearchFocused(true)}
+                    onBlur={() => setSearchFocused(false)}
+                   />
+                   <button className="bg-[#009FE3] hover:bg-[#008AC5] text-white px-6 py-3 rounded-xl font-bold text-lg transition-colors">
+                      Zoek
+                   </button>
+                </div>
+              </div>
+
+              {/* Trust Logos */}
+              <div className="mt-12 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                <p className="text-xs font-bold uppercase text-slate-400 mb-4 tracking-wider">Wij vergelijken prijzen van:</p>
+                <div className="flex flex-wrap justify-center lg:justify-start gap-8 items-center">
+                   {/* Simulated Logos with Text */}
+                   <span className="text-xl font-black text-slate-800">bol.</span>
+                   <span className="text-xl font-black text-slate-800 tracking-tighter">amazon</span>
+                   <span className="text-xl font-black text-[#009FE3] italic">Intertoys</span>
+                   <span className="text-xl font-black text-red-600">DreamLand</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Visual - Interactive Card Stack */}
+            <div className="flex-1 relative w-full max-w-lg lg:max-w-none perspective-1000">
+              
+              {/* Decorative Elements */}
+              <div className="absolute top-10 right-10 text-[#FFCC00] animate-bounce delay-100"><Sparkles size={48} /></div>
+              <div className="absolute bottom-20 left-0 text-[#E3004F] animate-pulse"><Heart size={32} fill="#E3004F" /></div>
+
+              {/* Card 1: Background */}
+              <div className="absolute top-8 left-8 w-full h-full bg-[#FFCC00] rounded-[3rem] transform rotate-6 opacity-40 blur-sm"></div>
+              
+              {/* Card 2: Main Featured Product */}
+              <div className="relative bg-white rounded-[3rem] p-8 md:p-10 border-4 border-slate-100 shadow-2xl transform transition-transform hover:scale-[1.01] duration-500">
+                <div className="absolute top-6 right-6 bg-[#E3004F] text-white font-bold px-4 py-2 rounded-full transform rotate-12 shadow-lg z-10">
+                  -35% Korting!
+                </div>
+                
+                <div className="bg-slate-50 rounded-3xl h-64 mb-8 flex items-center justify-center relative overflow-hidden group">
+                   <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,159,227,0.1)_0%,transparent_70%)]"></div>
+                   <Car size={140} className="text-slate-900 group-hover:scale-110 transition-transform duration-500" strokeWidth={1.5} />
+                </div>
+
+                <div className="flex justify-between items-end mb-6">
+                  <div>
+                    <h3 className="text-2xl font-black text-slate-900 mb-2">LEGO Technic Raceauto</h3>
+                    <div className="flex items-center gap-2 text-sm font-bold text-slate-500">
+                      <Star size={16} className="text-[#FFCC00] fill-[#FFCC00]" /> 4.9 (1.2k reviews)
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span className="block text-sm font-bold text-slate-400 line-through">€ 129,99</span>
+                    <span className="block text-4xl font-black text-[#009FE3]">€ 84,50</span>
+                  </div>
+                </div>
+
+                <button className="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold text-lg hover:bg-slate-800 transition-colors flex items-center justify-center gap-2">
+                  Vergelijk 12 Aanbieders <ArrowRight size={20} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SHOP BY AGE - Crucial for UX */}
+        <section className="mb-24 px-6">
+          <div className="max-w-[1440px] mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">Voor wie koop je?</h2>
+              <p className="text-slate-500 font-medium">Kies een leeftijd en zie direct de populairste cadeaus.</p>
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+              {[
+                { label: '0-2 Jaar', icon: <Baby size={32} />, color: 'bg-green-100 text-green-600' },
+                { label: '3-5 Jaar', icon: <Blocks size={32} />, color: 'bg-yellow-100 text-yellow-600' },
+                { label: '6-8 Jaar', icon: <Car size={32} />, color: 'bg-blue-100 text-blue-600' },
+                { label: '9-12 Jaar', icon: <Gamepad2 size={32} />, color: 'bg-purple-100 text-purple-600' },
+                { label: '12+ Jaar', icon: <Zap size={32} />, color: 'bg-red-100 text-red-600' },
+              ].map((age, i) => (
+                <div key={i} className="group cursor-pointer flex flex-col items-center gap-3">
+                   <div className={`w-24 h-24 md:w-32 md:h-32 rounded-full ${age.color} flex items-center justify-center border-4 border-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl`}>
+                     {age.icon}
+                   </div>
+                   <span className="font-bold text-slate-700 group-hover:text-slate-900">{age.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FLASH DEALS - Horizontal Scroll */}
+        <section className="bg-slate-900 text-white py-16 mb-24 overflow-hidden relative">
+          {/* Animated Ticker Background */}
+          <div className="absolute top-0 left-0 w-full h-full opacity-10 flex items-center justify-center pointer-events-none overflow-hidden whitespace-nowrap">
+             <span className="text-[20vw] font-black leading-none select-none animate-pulse">FLASH SALE</span>
+          </div>
+
+          <div className="max-w-[1440px] mx-auto px-6 relative z-10">
+            <div className="flex justify-between items-end mb-10">
+               <div>
+                 <div className="flex items-center gap-3 mb-2 text-[#FFCC00]">
+                    <Clock className="animate-pulse" />
+                    <span className="font-bold tracking-widest uppercase text-sm">Alleen vandaag</span>
+                 </div>
+                 <h2 className="text-4xl md:text-5xl font-black">Dag Deals</h2>
+               </div>
+               <a href="#" className="hidden md:flex items-center gap-2 font-bold text-[#FFCC00] hover:text-white transition-colors">
+                 Bekijk alle deals <ArrowRight size={20} />
+               </a>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1, 2, 3, 4].map((item) => (
+                <div key={item} className="bg-white text-slate-900 rounded-3xl p-5 hover:-translate-y-2 transition-transform duration-300">
+                  <div className="relative bg-slate-100 rounded-2xl h-48 mb-4 flex items-center justify-center overflow-hidden">
+                    <div className="absolute top-3 left-3 bg-[#E3004F] text-white text-xs font-black px-2 py-1 rounded">-40%</div>
+                    <Gift size={64} className="text-slate-300" />
+                  </div>
+                  <h3 className="font-bold text-lg mb-1 leading-tight">Barbie Dreamhouse 2025</h3>
+                  <div className="flex items-center gap-2 text-xs text-slate-500 mb-4">
+                    <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold">Laagste prijs ooit</span>
+                  </div>
+                  <div className="flex justify-between items-center border-t border-slate-100 pt-4">
+                     <div className="flex flex-col">
+                       <span className="text-xs text-slate-400 line-through">€ 89,99</span>
+                       <span className="text-2xl font-black text-[#009FE3]">€ 54,00</span>
+                     </div>
+                     <button className="bg-[#FFCC00] p-2.5 rounded-xl text-slate-900 hover:scale-110 transition-transform shadow-sm">
+                       <ArrowRight size={20} />
+                     </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* POPULAR CATEGORIES - Grid */}
+        <section className="max-w-[1440px] mx-auto px-6 mb-24">
+          <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-10 text-center md:text-left">Populaire Categorieën</h2>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            {/* Large Card 1 */}
+            <div className={`${cardHover} bg-blue-50 rounded-[2.5rem] p-8 relative overflow-hidden group cursor-pointer border-2 border-blue-100`}>
+               <div className="relative z-10">
+                 <h3 className="text-3xl font-black text-slate-900 mb-2">LEGO</h3>
+                 <p className="text-slate-600 mb-6 font-medium">Van Harry Potter tot Star Wars.</p>
+                 <span className="inline-flex items-center gap-2 font-bold text-[#009FE3] group-hover:gap-3 transition-all">
+                   Bekijk 2.405 sets <ArrowRight size={18} />
+                 </span>
+               </div>
+               <Blocks size={180} className="absolute -bottom-10 -right-10 text-blue-200 group-hover:rotate-12 transition-transform duration-500" />
+            </div>
+
+            {/* Large Card 2 */}
+            <div className={`${cardHover} bg-pink-50 rounded-[2.5rem] p-8 relative overflow-hidden group cursor-pointer border-2 border-pink-100`}>
+               <div className="relative z-10">
+                 <h3 className="text-3xl font-black text-slate-900 mb-2">Poppen</h3>
+                 <p className="text-slate-600 mb-6 font-medium">Barbie, L.O.L. Surprise & meer.</p>
+                 <span className="inline-flex items-center gap-2 font-bold text-[#E3004F] group-hover:gap-3 transition-all">
+                   Vergelijk prijzen <ArrowRight size={18} />
+                 </span>
+               </div>
+               <User size={180} className="absolute -bottom-10 -right-10 text-pink-200 group-hover:rotate-12 transition-transform duration-500" />
+            </div>
+
+            {/* Stacked Cards */}
+            <div className="flex flex-col gap-6">
+               <div className={`${cardHover} flex-1 bg-yellow-50 rounded-[2.5rem] p-6 flex items-center justify-between border-2 border-yellow-100 cursor-pointer group`}>
+                  <div>
+                    <h3 className="text-xl font-black mb-1">Gezelschapsspellen</h3>
+                    <p className="text-sm text-slate-600 font-bold text-yellow-700">Top 10 Catan aanbiedingen</p>
+                  </div>
+                  <Award size={48} className="text-yellow-400 group-hover:scale-110 transition-transform" />
+               </div>
+               <div className={`${cardHover} flex-1 bg-green-50 rounded-[2.5rem] p-6 flex items-center justify-between border-2 border-green-100 cursor-pointer group`}>
+                  <div>
+                    <h3 className="text-xl font-black mb-1">Buitenspeelgoed</h3>
+                    <p className="text-sm text-slate-600 font-bold text-green-700">Trampolines & Zwembaden</p>
+                  </div>
+                  <TrendingUp size={48} className="text-green-400 group-hover:scale-110 transition-transform" />
+               </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* VALUE PROPOSITION & NEWSLETTER */}
+        <section className="px-6 mb-20">
+          <div className="max-w-[1440px] mx-auto bg-slate-900 rounded-[3rem] p-8 md:p-16 text-center relative overflow-hidden">
+             
+             {/* Abstract Shapes */}
+             <div className="absolute top-0 left-0 w-full h-full opacity-20">
+                <div className="absolute top-[-50%] left-[-20%] w-[800px] h-[800px] bg-[#009FE3] rounded-full blur-[100px]"></div>
+                <div className="absolute bottom-[-50%] right-[-20%] w-[800px] h-[800px] bg-[#E3004F] rounded-full blur-[100px]"></div>
+             </div>
+
+             <div className="relative z-10 max-w-3xl mx-auto">
+               <h2 className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+                 Mis nooit meer een <span className="text-[#FFCC00] underline decoration-4 decoration-[#E3004F]">prijsfoutje</span>.
+               </h2>
+               <p className="text-slate-300 text-lg md:text-xl font-medium mb-10 leading-relaxed">
+                 Schrijf je in voor de ToyCompare Alert. Wij sturen je alleen een mailtje als de prijs van populair speelgoed drastisch zakt.
+               </p>
+
+               <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
+                 <input 
+                   type="email" 
+                   placeholder="Jouw e-mailadres" 
+                   className="flex-1 bg-white/10 border-2 border-white/10 rounded-2xl px-6 py-4 text-white font-bold placeholder:text-slate-400 focus:bg-white/20 focus:border-[#FFCC00] outline-none transition-all"
+                 />
+                 <button className={buttonPrimary}>
+                   Meld mij aan <ChevronRight size={20} strokeWidth={3} />
+                 </button>
+               </div>
+               <p className="text-slate-500 text-xs font-bold mt-6 uppercase tracking-wide">
+                 <ShieldCheck size={14} className="inline mr-1" /> Geen spam, altijd opzegbaar.
+               </p>
+             </div>
+          </div>
+        </section>
+
+      </main>
+
+      {/* FOOTER */}
+      <footer className="bg-white border-t border-slate-200 pt-20 pb-10">
+        <div className="max-w-[1440px] mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between gap-12 mb-16">
+            <div className="max-w-xs">
+              <div className="flex items-center gap-2 mb-6">
+                <div className="w-10 h-10 bg-[#FFCC00] rounded-lg flex items-center justify-center text-slate-900 shadow-[4px_4px_0_black] border-2 border-black">
+                   <Gamepad2 size={20} strokeWidth={2.5} />
+                </div>
+                <span className="text-2xl font-black text-slate-900">ToyCompare</span>
+              </div>
+              <p className="text-slate-500 font-medium leading-relaxed">
+                Wij helpen ouders, ooms, tantes en opa's & oma's de beste speelgoed deals te vinden. 100% onafhankelijk.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-12">
+               <div>
+                 <h4 className="font-black text-slate-900 mb-6 text-lg">Winkelen</h4>
+                 <ul className="space-y-4 font-bold text-slate-500">
+                   <li><a href="#" className="hover:text-[#009FE3] transition-colors">Alle Categorieën</a></li>
+                   <li><a href="#" className="hover:text-[#009FE3] transition-colors">Merken A-Z</a></li>
+                   <li><a href="#" className="hover:text-[#009FE3] transition-colors">Winkels</a></li>
+                   <li><a href="#" className="hover:text-[#009FE3] transition-colors text-[#E3004F]">Black Friday Deals</a></li>
+                 </ul>
+               </div>
+               <div>
+                 <h4 className="font-black text-slate-900 mb-6 text-lg">Hulp nodig?</h4>
+                 <ul className="space-y-4 font-bold text-slate-500">
+                   <li><a href="#" className="hover:text-[#009FE3] transition-colors">Cadeauwijzer</a></li>
+                   <li><a href="#" className="hover:text-[#009FE3] transition-colors">Veelgestelde vragen</a></li>
+                   <li><a href="#" className="hover:text-[#009FE3] transition-colors">Over ons</a></li>
+                   <li><a href="#" className="hover:text-[#009FE3] transition-colors">Contact</a></li>
+                 </ul>
+               </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-bold text-slate-400">
+            <span>© 2025 ToyCompare BV. Alle rechten voorbehouden.</span>
+            <div className="flex gap-6">
+              <a href="#" className="hover:text-slate-900">Privacy</a>
+              <a href="#" className="hover:text-slate-900">Cookies</a>
+              <a href="#" className="hover:text-slate-900">Voorwaarden</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  );
+};
+
+export default App;
