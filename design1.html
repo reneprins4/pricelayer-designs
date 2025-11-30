@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeelPrijs - De leukste prijsvergelijker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap');
+
+        /* Base Typography */
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #FFF9F0; /* Warm cream background */
+            background-image: radial-gradient(#FFEDD5 2px, transparent 2px);
+            background-size: 40px 40px;
+        }
+
+        h1, h2, h3, h4, h5, h6, .font-display {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF9F0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FDBA74;
+            border-radius: 20px;
+            border: 3px solid #FFF9F0;
+        }
+
+        /* Playful Hover Effects */
+        .hover-bounce {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .hover-bounce:hover {
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        .hover-up {
+            transition: transform 0.3s ease;
+        }
+        .hover-up:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 3D Button Styles */
+        .btn-3d {
+            transition: all 0.1s;
+            border-bottom-width: 4px;
+        }
+        .btn-3d:active {
+            transform: translateY(2px);
+            border-bottom-width: 0px;
+            margin-top: 2px; /* Compensate for border loss */
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* Card Styles */
+        .card-pop {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 8px 0px rgba(0,0,0,0.05);
+            border: 2px solid #F3F4F6;
+        }
+
+        /* Mega Menu Transitions */
+        .mega-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .group:hover .mega-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="text-slate-700 antialiased overflow-x-hidden">
+
+    <!-- Decorational Blobs -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
+        <div class="absolute top-20 left-0 w-[600px] h-[600px] bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" style="animation-delay: 2s"></div>
+        <div class="absolute -bottom-32 left-1/3 w-[600px] h-[600px] bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" style="animation-delay: 1s"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-4 w-full z-50 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white/90 backdrop-blur-xl border-2 border-white rounded-3xl px-6 py-3 shadow-lg shadow-purple-500/5 flex justify-between items-center relative">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2 group z-50">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-white shadow-lg group-hover:rotate-12 transition-transform duration-300">
+                        <i data-lucide="rocket" class="w-5 h-5 text-white fill-white"></i>
+                    </div>
+                    <span class="text-2xl font-bold font-display text-slate-800 tracking-tight">Speel<span class="text-purple-600">Prijs</span></span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    
+                    <!-- Categorieën Dropdown (MEGA MENU) -->
+                    <div class="group py-4"> <!-- Added padding Y to help hover state bridge the gap -->
+                        <button class="flex items-center gap-1 font-bold text-slate-500 group-hover:text-purple-600 transition-colors">
+                            Categorieën 
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform group-hover:rotate-180"></i>
+                        </button>
+
+                        <!-- Mega Menu Content -->
+                        <div class="mega-menu absolute left-0 top-full w-full px-4 pt-2 pointer-events-none group-hover:pointer-events-auto">
+                            <div class="bg-white rounded-3xl shadow-xl border-2 border-purple-50 p-8 grid grid-cols-4 gap-8">
+                                <!-- Col 1: Leeftijd -->
+                                <div>
+                                    <h4 class="font-display font-bold text-purple-600 mb-4 flex items-center gap-2">
+                                        <i data-lucide="cake" class="w-4 h-4"></i> Leeftijd
+                                    </h4>
+                                    <ul class="space-y-2 text-sm font-bold text-slate-500">
+                                        <li><a href="#" class="hover:text-purple-600 hover:translate-x-1 inline-block transition-all">Baby (0-2 jaar)</a></li>
+                                        <li><a href="#" class="hover:text-purple-600 hover:translate-x-1 inline-block transition-all">Peuter (2-4 jaar)</a></li>
+                                        <li><a href="#" class="hover:text-purple-600 hover:translate-x-1 inline-block transition-all">Kleuter (4-6 jaar)</a></li>
+                                        <li><a href="#" class="hover:text-purple-600 hover:translate-x-1 inline-block transition-all">Schoolkind (6-9 jaar)</a></li>
+                                        <li><a href="#" class="hover:text-purple-600 hover:translate-x-1 inline-block transition-all">Tiener (9-12 jaar)</a></li>
+                                        <li><a href="#" class="hover:text-purple-600 hover:translate-x-1 inline-block transition-all">12+ en Volwassenen</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Col 2: Soort Speelgoed -->
+                                <div>
+                                    <h4 class="font-display font-bold text-blue-500 mb-4 flex items-center gap-2">
+                                        <i data-lucide="blocks" class="w-4 h-4"></i> Categorie
+                                    </h4>
+                                    <ul class="space-y-2 text-sm font-bold text-slate-500">
+                                        <li><a href="#" class="hover:text-blue-500 hover:translate-x-1 inline-block transition-all">Bouwsets & LEGO</a></li>
+                                        <li><a href="#" class="hover:text-blue-500 hover:translate-x-1 inline-block transition-all">Bordspellen & Puzzels</a></li>
+                                        <li><a href="#" class="hover:text-blue-500 hover:translate-x-1 inline-block transition-all">Poppen & Knuffels</a></li>
+                                        <li><a href="#" class="hover:text-blue-500 hover:translate-x-1 inline-block transition-all">Voertuigen</a></li>
+                                        <li><a href="#" class="hover:text-blue-500 hover:translate-x-1 inline-block transition-all">Educatief & Wetenschap</a></li>
+                                        <li><a href="#" class="hover:text-blue-500 hover:translate-x-1 inline-block transition-all">Knutselen & Tekenen</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Col 3: Merken -->
+                                <div>
+                                    <h4 class="font-display font-bold text-pink-500 mb-4 flex items-center gap-2">
+                                        <i data-lucide="tag" class="w-4 h-4"></i> Top Merken
+                                    </h4>
+                                    <ul class="space-y-2 text-sm font-bold text-slate-500">
+                                        <li><a href="#" class="hover:text-pink-500 hover:translate-x-1 inline-block transition-all">LEGO</a></li>
+                                        <li><a href="#" class="hover:text-pink-500 hover:translate-x-1 inline-block transition-all">Playmobil</a></li>
+                                        <li><a href="#" class="hover:text-pink-500 hover:translate-x-1 inline-block transition-all">Barbie</a></li>
+                                        <li><a href="#" class="hover:text-pink-500 hover:translate-x-1 inline-block transition-all">VTech</a></li>
+                                        <li><a href="#" class="hover:text-pink-500 hover:translate-x-1 inline-block transition-all">Fisher-Price</a></li>
+                                        <li><a href="#" class="hover:text-pink-500 hover:translate-x-1 inline-block transition-all">Ravensburger</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Col 4: Uitgelicht -->
+                                <div class="bg-yellow-50 rounded-2xl p-4 border border-yellow-100">
+                                    <h4 class="font-display font-bold text-yellow-600 mb-4 flex items-center gap-2">
+                                        <i data-lucide="star" class="w-4 h-4"></i> Populair Nu
+                                    </h4>
+                                    <div class="space-y-3">
+                                        <a href="#" class="flex items-center gap-3 bg-white p-2 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                                            <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center text-xl">🎁</div>
+                                            <div class="leading-tight">
+                                                <div class="text-xs font-bold text-red-500">Sinterklaas</div>
+                                                <div class="text-sm font-bold text-slate-700">Top 10 Schoencadeaus</div>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="flex items-center gap-3 bg-white p-2 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                                            <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center text-xl">🌳</div>
+                                            <div class="leading-tight">
+                                                <div class="text-xs font-bold text-green-500">Buiten</div>
+                                                <div class="text-sm font-bold text-slate-700">Trampolines & Meer</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <a href="#" class="mt-4 block text-center text-xs font-black text-yellow-600 hover:text-yellow-700 uppercase tracking-wide">Bekijk alle thema's →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="font-bold text-slate-500 hover:text-purple-600 transition-colors">Winkels</a>
+                    <a href="#" class="font-bold text-slate-500 hover:text-purple-600 transition-colors">Dagdeals</a>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-3">
+                    <button class="hidden md:block font-bold text-slate-600 hover:text-purple-600">Inloggen</button>
+                    <button class="px-5 py-2.5 rounded-full bg-yellow-400 border-b-4 border-yellow-500 text-yellow-900 font-bold hover:bg-yellow-300 btn-3d transition-colors flex items-center gap-2">
+                        <i data-lucide="bell" class="w-4 h-4"></i> <span class="hidden sm:inline">Deal Alert</span>
+                    </button>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+                        <i data-lucide="menu" class="w-7 h-7"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-4 right-4 bg-white rounded-3xl shadow-2xl border-2 border-purple-50 overflow-hidden z-40">
+                <div class="p-4 space-y-4">
+                    <!-- Mobile Submenu Toggle -->
+                    <div class="border-b border-slate-100 pb-2">
+                        <button onclick="document.getElementById('mobile-submenu').classList.toggle('hidden')" class="flex justify-between items-center w-full font-bold text-lg text-slate-700 py-2">
+                            Categorieën
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-purple-500"></i>
+                        </button>
+                        <div id="mobile-submenu" class="hidden pl-4 space-y-3 mt-2 text-slate-500 pb-2">
+                            <p class="text-xs font-black text-purple-400 uppercase tracking-wider">Leeftijd</p>
+                            <a href="#" class="block font-medium">Baby & Peuter</a>
+                            <a href="#" class="block font-medium">4 tot 8 jaar</a>
+                            <a href="#" class="block font-medium">8 tot 12 jaar</a>
+                            
+                            <p class="text-xs font-black text-blue-400 uppercase tracking-wider mt-4">Soort</p>
+                            <a href="#" class="block font-medium">LEGO & Bouwen</a>
+                            <a href="#" class="block font-medium">Spellen</a>
+                            <a href="#" class="block font-medium">Buiten</a>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="block font-bold text-lg text-slate-700 py-2 border-b border-slate-100">Winkels</a>
+                    <a href="#" class="block font-bold text-lg text-slate-700 py-2 border-b border-slate-100">Dagdeals</a>
+                    <a href="#" class="block font-bold text-lg text-purple-600 py-2">Inloggen</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-32 pb-20">
+        
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="space-y-6 relative z-10 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border-2 border-purple-100 shadow-sm rotate-2 hover:rotate-0 transition-transform cursor-default">
+                        <span class="flex h-3 w-3 rounded-full bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.5)]"></span>
+                        <span class="text-sm font-bold text-purple-900">Prijzen live geüpdatet</span>
+                    </div>
+                    
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold font-display text-slate-800 leading-[1.1]">
+                        Betaal nooit meer <br>
+                        te veel voor <br>
+                        <span class="relative inline-block">
+                            <span class="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">speelgoed.</span>
+                            <svg class="absolute -bottom-2 w-full h-3 text-yellow-300 -z-0" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none"></path></svg>
+                        </span>
+                    </h1>
+                    
+                    <p class="text-xl text-slate-500 font-medium max-w-lg mx-auto lg:mx-0">
+                        Wij scannen elke minuut Bol, Intertoys, Amazon en 50+ andere shops. Vind direct de laagste prijs.
+                    </p>
+                    
+                    <!-- Fun Search Bar -->
+                    <div class="relative max-w-lg mx-auto lg:mx-0 group mt-8">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-pink-400 rounded-3xl blur opacity-70 group-hover:opacity-100 transition duration-200 animate-pulse"></div>
+                        <div class="relative flex items-center bg-white rounded-2xl p-2 shadow-xl">
+                            <div class="pl-4 text-purple-400">
+                                <i data-lucide="search" class="w-6 h-6 stroke-[3]"></i>
+                            </div>
+                            <input type="text" placeholder="Zoek op LEGO, Barbie, Playmobil..." class="w-full p-4 bg-transparent text-slate-800 placeholder-slate-400 font-bold focus:outline-none text-lg">
+                            <button class="bg-purple-600 text-white px-8 py-3 rounded-xl font-bold text-base hover:bg-purple-500 transition-colors btn-3d border-b-4 border-purple-800 shadow-lg">
+                                Zoek
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Trust Indicators -->
+                    <div class="pt-8 flex flex-col lg:flex-row items-center gap-4 text-sm font-bold text-slate-400">
+                        <span>WIJ ZOEKEN BIJ:</span>
+                        <div class="flex gap-4 opacity-70">
+                            <span class="px-3 py-1 bg-white rounded-lg shadow-sm border border-slate-100 text-blue-800 font-black">bol.</span>
+                            <span class="px-3 py-1 bg-white rounded-lg shadow-sm border border-slate-100 text-slate-800 font-bold italic">amazon</span>
+                            <span class="px-3 py-1 bg-white rounded-lg shadow-sm border border-slate-100 text-orange-500 font-black">Intertoys</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Visual -->
+                <div class="relative lg:h-[600px] w-full flex items-center justify-center perspective-1000 mt-10 lg:mt-0">
+                    
+                    <!-- Decorative Circle -->
+                    <div class="absolute w-[450px] h-[450px] bg-white rounded-full border-4 border-dashed border-purple-200 animate-[spin_60s_linear_infinite]"></div>
+                    
+                    <!-- Main Card -->
+                    <div class="relative w-80 bg-white rounded-[2rem] p-6 shadow-[0_20px_50px_-12px_rgba(124,58,237,0.25)] border-4 border-white transform rotate-[-3deg] hover:rotate-0 transition-all duration-500 z-20">
+                        <div class="absolute -top-4 -right-4 bg-red-500 text-white font-black text-sm px-4 py-2 rounded-full border-4 border-white shadow-lg rotate-12">
+                            -25% DEAL
+                        </div>
+                        
+                        <div class="aspect-square rounded-2xl bg-slate-50 mb-5 overflow-hidden relative flex items-center justify-center p-4 group cursor-pointer">
+                             <img src="https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?auto=format&fit=crop&q=80&w=400" alt="LEGO" class="object-contain w-full h-full group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        
+                        <h3 class="text-xl font-bold font-display text-slate-800 leading-tight mb-2">LEGO Millennium Falcon</h3>
+                        
+                        <!-- Price List -->
+                        <div class="space-y-3 mt-4">
+                            <!-- Cheapest -->
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-green-50 border-2 border-green-100">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-white flex items-center justify-center text-xs shadow-sm">🏆</div>
+                                    <span class="font-bold text-slate-700">Amazon</span>
+                                </div>
+                                <span class="font-black text-lg text-green-600">€149,99</span>
+                            </div>
+                            <!-- Others -->
+                            <div class="flex items-center justify-between px-3 py-2 rounded-xl text-slate-400 opacity-60 hover:opacity-100 transition-opacity">
+                                <span class="font-bold text-sm">bol.com</span>
+                                <span class="font-bold text-sm">€159,00</span>
+                            </div>
+                            <div class="flex items-center justify-between px-3 py-2 rounded-xl text-slate-400 opacity-60 hover:opacity-100 transition-opacity">
+                                <span class="font-bold text-sm">Intertoys</span>
+                                <span class="font-bold text-sm">€164,95</span>
+                            </div>
+                        </div>
+
+                        <button class="w-full mt-6 bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition-colors">
+                            Bekijk Deal
+                        </button>
+                    </div>
+
+                    <!-- Floating Element 1 -->
+                    <div class="absolute top-20 right-10 bg-white p-4 rounded-2xl shadow-lg animate-float border-2 border-pink-100 rotate-6" style="animation-delay: 1s;">
+                        <i data-lucide="heart" class="w-8 h-8 text-pink-500 fill-pink-500"></i>
+                    </div>
+
+                    <!-- Floating Element 2 -->
+                    <div class="absolute bottom-32 left-0 bg-white px-4 py-2 rounded-xl shadow-lg animate-float border-2 border-yellow-100 -rotate-6 z-30 flex items-center gap-2">
+                        <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                        <span class="font-bold text-slate-600 text-xs">Net 2x verkocht</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fun Categories -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+            <h2 class="text-3xl font-bold font-display text-slate-800 mb-8 text-center">Wat zoek je?</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <!-- LEGO -->
+                <a href="#" class="group flex flex-col items-center gap-3">
+                    <div class="w-24 h-24 rounded-[2rem] bg-orange-100 border-2 border-orange-200 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform shadow-sm">
+                        <i data-lucide="blocks" class="w-10 h-10 text-orange-500"></i>
+                    </div>
+                    <span class="font-bold text-slate-600 group-hover:text-orange-600">Bouwen</span>
+                </a>
+                
+                <!-- Poppen -->
+                <a href="#" class="group flex flex-col items-center gap-3">
+                    <div class="w-24 h-24 rounded-[2rem] bg-pink-100 border-2 border-pink-200 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform shadow-sm">
+                        <i data-lucide="smile" class="w-10 h-10 text-pink-500"></i>
+                    </div>
+                    <span class="font-bold text-slate-600 group-hover:text-pink-600">Poppen</span>
+                </a>
+
+                <!-- Gaming -->
+                <a href="#" class="group flex flex-col items-center gap-3">
+                    <div class="w-24 h-24 rounded-[2rem] bg-purple-100 border-2 border-purple-200 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform shadow-sm">
+                        <i data-lucide="gamepad-2" class="w-10 h-10 text-purple-500"></i>
+                    </div>
+                    <span class="font-bold text-slate-600 group-hover:text-purple-600">Gamen</span>
+                </a>
+
+                <!-- Puzzels -->
+                <a href="#" class="group flex flex-col items-center gap-3">
+                    <div class="w-24 h-24 rounded-[2rem] bg-green-100 border-2 border-green-200 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform shadow-sm">
+                        <i data-lucide="puzzle" class="w-10 h-10 text-green-500"></i>
+                    </div>
+                    <span class="font-bold text-slate-600 group-hover:text-green-600">Puzzels</span>
+                </a>
+
+                <!-- Baby -->
+                <a href="#" class="group flex flex-col items-center gap-3">
+                    <div class="w-24 h-24 rounded-[2rem] bg-blue-100 border-2 border-blue-200 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform shadow-sm">
+                        <i data-lucide="baby" class="w-10 h-10 text-blue-500"></i>
+                    </div>
+                    <span class="font-bold text-slate-600 group-hover:text-blue-600">Baby</span>
+                </a>
+
+                <!-- Buiten -->
+                <a href="#" class="group flex flex-col items-center gap-3">
+                    <div class="w-24 h-24 rounded-[2rem] bg-yellow-100 border-2 border-yellow-200 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform shadow-sm">
+                        <i data-lucide="sun" class="w-10 h-10 text-yellow-600"></i>
+                    </div>
+                    <span class="font-bold text-slate-600 group-hover:text-yellow-600">Buiten</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Trending Deals Cards -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="text-3xl font-bold font-display text-slate-800">
+                        🔥 Heetste Prijsdalers
+                    </h2>
+                    <p class="font-medium text-slate-500 mt-2">De beste kortingen, net gevonden.</p>
+                </div>
+                <a href="#" class="hidden sm:flex px-6 py-2 rounded-xl bg-white border-2 border-slate-200 font-bold text-slate-600 hover:border-purple-400 hover:text-purple-600 transition-colors">
+                    Alles bekijken
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Product Card 1 -->
+                <div class="card-pop p-4 group hover-up flex flex-col h-full">
+                    <div class="relative aspect-square rounded-2xl bg-slate-50 mb-4 overflow-hidden flex items-center justify-center p-4">
+                        <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-black px-2 py-1 rounded-lg shadow-sm z-10 rotate-[-5deg]">
+                            -30% KORTING
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1628151015968-3a4429e9ef04?auto=format&fit=crop&q=80&w=300" alt="Funko" class="object-contain h-full w-full group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="mb-3">
+                        <div class="text-xs font-bold text-purple-500 mb-1 uppercase tracking-wide">Verzamel</div>
+                        <h3 class="text-lg font-bold font-display text-slate-800 leading-tight">Marvel Funko Pop</h3>
+                    </div>
+                    
+                    <div class="mt-auto bg-slate-50 rounded-xl p-3 border border-slate-100">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-bold text-slate-400">Laagste prijs:</span>
+                            <span class="text-lg font-black text-green-600">€12,99</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-1.5 mb-2">
+                            <div class="bg-green-500 h-1.5 rounded-full" style="width: 70%"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
+                             <span>Amazon</span>
+                             <span class="line-through">€18.50</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="card-pop p-4 group hover-up flex flex-col h-full">
+                    <div class="relative aspect-square rounded-2xl bg-slate-50 mb-4 overflow-hidden flex items-center justify-center p-4">
+                        <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-black px-2 py-1 rounded-lg shadow-sm z-10 rotate-[-5deg]">
+                            -15% DEAL
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&q=80&w=300" alt="Robot" class="object-contain h-full w-full group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="mb-3">
+                        <div class="text-xs font-bold text-blue-500 mb-1 uppercase tracking-wide">Tech</div>
+                        <h3 class="text-lg font-bold font-display text-slate-800 leading-tight">Programmeer Robot</h3>
+                    </div>
+                    
+                    <div class="mt-auto bg-slate-50 rounded-xl p-3 border border-slate-100">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-bold text-slate-400">Laagste prijs:</span>
+                            <span class="text-lg font-black text-green-600">€34,00</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-1.5 mb-2">
+                            <div class="bg-green-500 h-1.5 rounded-full" style="width: 40%"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
+                             <span>bol.com</span>
+                             <span class="line-through">€39.99</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="card-pop p-4 group hover-up flex flex-col h-full">
+                    <div class="relative aspect-square rounded-2xl bg-slate-50 mb-4 overflow-hidden flex items-center justify-center p-4">
+                         <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-black px-2 py-1 rounded-lg shadow-sm z-10 rotate-[-5deg]">
+                            -22%
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1515488042361-25f4682ea129?auto=format&fit=crop&q=80&w=300" alt="Barbie" class="object-contain h-full w-full group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="mb-3">
+                        <div class="text-xs font-bold text-pink-500 mb-1 uppercase tracking-wide">Poppen</div>
+                        <h3 class="text-lg font-bold font-display text-slate-800 leading-tight">Barbie Droomhuis</h3>
+                    </div>
+                    
+                    <div class="mt-auto bg-slate-50 rounded-xl p-3 border border-slate-100">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-bold text-slate-400">Laagste prijs:</span>
+                            <span class="text-lg font-black text-green-600">€189,00</span>
+                        </div>
+                         <div class="w-full bg-gray-200 rounded-full h-1.5 mb-2">
+                            <div class="bg-green-500 h-1.5 rounded-full" style="width: 85%"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
+                             <span>Intertoys</span>
+                             <span class="line-through">€249.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="card-pop p-4 group hover-up flex flex-col h-full">
+                    <div class="relative aspect-square rounded-2xl bg-slate-50 mb-4 overflow-hidden flex items-center justify-center p-4">
+                         <div class="absolute top-3 left-3 bg-yellow-400 text-yellow-900 text-xs font-black px-2 py-1 rounded-lg shadow-sm z-10 rotate-3">
+                            NIEUW
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1611604548018-d56bbd85d681?auto=format&fit=crop&q=80&w=300" alt="Game" class="object-contain h-full w-full group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="mb-3">
+                        <div class="text-xs font-bold text-orange-500 mb-1 uppercase tracking-wide">Spellen</div>
+                        <h3 class="text-lg font-bold font-display text-slate-800 leading-tight">Catan Bordspel</h3>
+                    </div>
+                    
+                    <div class="mt-auto bg-slate-50 rounded-xl p-3 border border-slate-100">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-bold text-slate-400">Laagste prijs:</span>
+                            <span class="text-lg font-black text-green-600">€32,50</span>
+                        </div>
+                         <div class="w-full bg-gray-200 rounded-full h-1.5 mb-2">
+                            <div class="bg-green-500 h-1.5 rounded-full" style="width: 50%"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
+                             <span>Amazon</span>
+                             <span class="line-through">€39.99</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="mt-8 text-center sm:hidden">
+                 <a href="#" class="inline-block px-8 py-3 rounded-xl bg-white border-2 border-slate-200 font-bold text-slate-600 hover:border-purple-400 hover:text-purple-600 transition-colors w-full">
+                    Alles bekijken
+                </a>
+            </div>
+        </section>
+
+        <!-- Fun CTA Section -->
+        <section class="max-w-4xl mx-auto px-4 mb-20">
+            <div class="bg-purple-600 rounded-[2.5rem] p-8 md:p-12 text-center relative overflow-hidden shadow-2xl shadow-purple-500/30">
+                <!-- Background Pattern -->
+                <div class="absolute top-0 left-0 w-full h-full opacity-10" style="background-image: radial-gradient(#fff 2px, transparent 2px); background-size: 20px 20px;"></div>
+                
+                <!-- Content -->
+                <div class="relative z-10">
+                    <div class="inline-flex items-center justify-center p-3 bg-white/20 backdrop-blur-md rounded-2xl mb-6 border border-white/30 rotate-3">
+                         <i data-lucide="bell-ring" class="w-8 h-8 text-yellow-300"></i>
+                    </div>
+                    
+                    <h2 class="text-3xl md:text-4xl font-black font-display text-white mb-4">
+                        Mis die <span class="text-yellow-300 italic">megadeal</span> niet!
+                    </h2>
+                    <p class="text-purple-100 font-medium text-lg mb-8 max-w-md mx-auto">
+                        Geef ons een seintje, dan sturen wij een mailtje als de prijs zakt. Geen spam, alleen speelgoed.
+                    </p>
+                    
+                    <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                        <input type="email" placeholder="jouw@email.nl" class="flex-1 px-6 py-4 rounded-xl bg-white text-slate-800 placeholder-slate-400 font-bold focus:outline-none focus:ring-4 focus:ring-yellow-400/50 shadow-lg">
+                        <button type="button" class="px-8 py-4 rounded-xl bg-yellow-400 text-yellow-900 font-black hover:bg-yellow-300 transition-colors btn-3d border-b-4 border-yellow-600 shadow-lg">
+                            Meld aan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t-4 border-white bg-white pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                <div class="col-span-2 md:col-span-1">
+                     <a href="#" class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 rounded-xl bg-slate-900 flex items-center justify-center text-white">
+                            <i data-lucide="rocket" class="w-4 h-4 text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold font-display text-slate-800">SpeelPrijs</span>
+                    </a>
+                    <p class="text-sm font-medium text-slate-400">
+                        Wij maken speelgoed kopen weer leuk (en goedkoop). Gemaakt voor ouders, door ouders.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold font-display text-slate-900 mb-4 text-lg">Winkels</h4>
+                    <ul class="space-y-2 text-sm font-bold text-slate-500">
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Bol.com</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Amazon</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Intertoys</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Top1Toys</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold font-display text-slate-900 mb-4 text-lg">Populair</h4>
+                    <ul class="space-y-2 text-sm font-bold text-slate-500">
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">LEGO</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Playmobil</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Barbie</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Paw Patrol</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold font-display text-slate-900 mb-4 text-lg">Info</h4>
+                    <ul class="space-y-2 text-sm font-bold text-slate-500">
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Over ons</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-purple-600 transition-colors">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t-2 border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs font-bold text-slate-400">© 2024 SpeelPrijs.nl</p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-purple-100 hover:text-purple-600 transition-colors">
+                        <i data-lucide="facebook" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-pink-100 hover:text-pink-600 transition-colors">
+                        <i data-lucide="instagram" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                // Menu closed icon
+                icon.setAttribute('data-lucide', 'menu');
+            } else {
+                // Menu open icon (X)
+                icon.setAttribute('data-lucide', 'x');
+            }
+            lucide.createIcons();
+        });
+    </script>
+
+</body>
+</html>
