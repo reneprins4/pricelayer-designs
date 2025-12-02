@@ -69,7 +69,7 @@
       }
 
       /* Mega Menu Transition */
-      .group:hover .mega-menu {
+      .group\/menu:hover .mega-menu {
           opacity: 1;
           visibility: visible;
           transform: translateY(0);
@@ -105,6 +105,53 @@
         class="max-w-[1440px] mx-auto px-4 md:px-8 flex items-center justify-between gap-4"
       >
         <!-- Logo -->
+        <details class="lg:hidden group relative z-50 mr-1">
+          <summary
+            class="list-none cursor-pointer text-slate-600 hover:text-slate-900 p-2 -ml-2 rounded-lg hover:bg-slate-100 transition-colors"
+          >
+            <i data-lucide="menu" size="24"></i>
+          </summary>
+          <div
+            class="absolute top-[calc(100%+12px)] -left-2 w-[85vw] sm:w-[320px] bg-white rounded-2xl shadow-2xl border border-slate-100 p-4 transform origin-top-left animate-in fade-in slide-in-from-top-2"
+          >
+            <div class="grid gap-2">
+              <div
+                class="text-xs font-black text-slate-400 uppercase tracking-wider mb-2 px-2"
+              >
+                Menu
+              </div>
+              <a
+                href="#"
+                class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 font-bold text-slate-700"
+              >
+                <i data-lucide="layout-grid" size="18" class="text-primary"></i>
+                Categorieën
+              </a>
+              <a
+                href="#"
+                class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 font-bold text-slate-700"
+              >
+                <i data-lucide="flame" size="18" class="text-action"></i>
+                Deals
+              </a>
+              <a
+                href="#"
+                class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 font-bold text-slate-700"
+              >
+                <i data-lucide="gift" size="18" class="text-green-500"></i>
+                Cadeauvinder
+              </a>
+              <div class="h-px bg-slate-100 my-1"></div>
+              <a
+                href="#"
+                class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 font-bold text-slate-700"
+              >
+                <i data-lucide="user" size="18" class="text-slate-400"></i>
+                Mijn Account
+              </a>
+            </div>
+          </div>
+        </details>
         <div class="flex items-center gap-3 cursor-pointer shrink-0">
           <div
             class="relative w-9 h-9 bg-primary rounded-lg flex items-center justify-center text-white shadow-sm shadow-blue-500/20"
@@ -127,12 +174,12 @@
               class="nav-search-island flex items-center w-full bg-slate-100/50 border border-slate-200 rounded-xl p-1 relative z-20"
             >
               <!-- Categories Dropdown Trigger -->
-              <div class="relative group/menu shrink-0">
+              <div class="relative group/menu shrink-0 hidden lg:block">
                 <button
                   class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold text-slate-600 hover:bg-white hover:text-primary hover:shadow-sm transition-all cursor-pointer"
                 >
                   <i data-lucide="layout-grid" size="16"></i>
-                  <span class="hidden sm:inline">Categorieën</span>
+                  <span class="hidden lg:inline">Categorieën</span>
                   <i
                     data-lucide="chevron-down"
                     size="14"
@@ -338,26 +385,80 @@
               </div>
 
               <!-- Divider -->
-              <div class="w-px h-6 bg-slate-200 mx-1"></div>
+              <div class="w-px h-6 bg-slate-200 mx-1 hidden md:block"></div>
 
               <!-- Search Input Area -->
               <div class="flex-1 relative">
                 <i
                   data-lucide="search"
                   size="18"
-                  class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                  class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 z-10"
                 ></i>
                 <input
                   type="text"
-                  class="w-full bg-transparent border-none text-sm font-bold text-slate-900 placeholder:text-slate-400 px-10 py-2.5 outline-none ring-0"
-                  placeholder="Zoek op speelgoed, merk of winkel..."
+                  class="peer w-full bg-transparent border-none text-sm font-bold text-slate-900 placeholder:text-slate-400 px-10 py-2.5 outline-none ring-0 relative z-20"
+                  placeholder="Zoek speelgoed..."
                 />
-                <!-- Command Hint -->
                 <div
-                  class="absolute right-3 top-1/2 -translate-y-1/2 hidden md:flex items-center gap-1 text-[10px] font-bold text-slate-400 border border-slate-200 rounded px-1.5 py-0.5 bg-white"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 hidden md:flex items-center gap-1 text-[10px] font-bold text-slate-400 border border-slate-200 rounded px-1.5 py-0.5 bg-white z-20"
                 >
                   <span class="text-xs">⌘</span>
                   K
+                </div>
+                <!-- Search Suggestions Dropdown -->
+                <div
+                  class="absolute top-[calc(100%+12px)] left-0 w-full bg-white rounded-xl shadow-xl border border-slate-100 p-4 invisible opacity-0 peer-focus:visible peer-focus:opacity-100 transition-all duration-200 z-50"
+                >
+                  <div
+                    class="text-xs font-black text-slate-400 uppercase tracking-wider mb-3"
+                  >
+                    Recente zoekopdrachten
+                  </div>
+                  <ul class="space-y-2 mb-4">
+                    <li>
+                      <a
+                        href="#"
+                        class="flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-primary"
+                      >
+                        <i data-lucide="history" size="14"></i>
+                        LEGO City
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        class="flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-primary"
+                      >
+                        <i data-lucide="history" size="14"></i>
+                        Barbie Huis
+                      </a>
+                    </li>
+                  </ul>
+                  <div
+                    class="text-xs font-black text-slate-400 uppercase tracking-wider mb-3"
+                  >
+                    Suggesties
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <a
+                      href="#"
+                      class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-xs font-bold text-slate-600 transition-colors"
+                    >
+                      Playmobil
+                    </a>
+                    <a
+                      href="#"
+                      class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-xs font-bold text-slate-600 transition-colors"
+                    >
+                      Paw Patrol
+                    </a>
+                    <a
+                      href="#"
+                      class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-xs font-bold text-slate-600 transition-colors"
+                    >
+                      Pokemon
+                    </a>
+                  </div>
                 </div>
               </div>
 
@@ -439,7 +540,7 @@
             </div>
 
             <h1
-              class="text-5xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.05] mb-6"
+              class="text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.05] mb-6 break-words"
             >
               Het Google voor
               <br />
@@ -518,10 +619,12 @@
 
             <!-- Composition Container -->
             <div
-              class="relative w-full max-w-md mx-auto transform lg:rotate-y-[-8deg] lg:rotate-x-[4deg] transition-transform duration-500 hover:rotate-0"
+              class="relative w-full max-w-[85vw] sm:max-w-md mx-auto transform lg:rotate-y-[-8deg] lg:rotate-x-[4deg] transition-transform duration-500 hover:rotate-0"
             >
               <!-- Floating Element: Price Savings Badge -->
-              <div class="absolute -top-6 -right-6 z-30 animate-float-medium">
+              <div
+                class="absolute -top-6 -right-2 md:-right-6 z-30 animate-float-medium"
+              >
                 <div
                   class="bg-gradient-to-br from-action to-pink-600 text-white p-4 rounded-2xl shadow-xl shadow-pink-500/20 rotate-6 border-[3px] border-white"
                 >
@@ -545,11 +648,11 @@
                 <div
                   class="bg-slate-50 rounded-2xl h-64 mb-6 flex items-center justify-center relative overflow-hidden group border border-slate-100"
                 >
-                  <i
-                    data-lucide="train"
-                    size="64"
-                    class="text-slate-300 relative z-10 group-hover:scale-110 transition-transform duration-500"
-                  ></i>
+                  <img
+                    src="https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?auto=format&amp;fit=crop&amp;w=800&amp;q=80"
+                    alt="Lego Train"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
                   <!-- Tag -->
                   <div
                     class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-black text-slate-900 shadow-sm z-20 flex items-center gap-1"
@@ -757,7 +860,7 @@
             class="group relative col-span-1 md:col-span-2 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 min-h-[200px]"
           >
             <img
-              src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&amp;fit=crop&amp;w=600&amp;q=80"
+              src="https://images.unsplash.com/photo-1534068590799-09895a701e3e?auto=format&amp;fit=crop&amp;w=600&amp;q=80"
               alt="Poppen"
               class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -777,7 +880,7 @@
             class="group relative col-span-1 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 min-h-[200px]"
           >
             <img
-              src="https://images.unsplash.com/photo-1632501641765-e568d9088bed?auto=format&amp;fit=crop&amp;w=400&amp;q=80"
+              src="https://images.unsplash.com/photo-1606167668584-78701c57f13d?auto=format&amp;fit=crop&amp;w=600&amp;q=80"
               alt="Spellen"
               class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -795,7 +898,7 @@
             class="group relative col-span-1 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 min-h-[200px]"
           >
             <img
-              src="https://images.unsplash.com/photo-1596464716127-f9a804e0647e?auto=format&amp;fit=crop&amp;w=400&amp;q=80"
+              src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&amp;fit=crop&amp;w=600&amp;q=80"
               alt="Buiten"
               class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -911,7 +1014,7 @@
             class="relative bg-slate-50 rounded-2xl aspect-[4/3] mb-4 overflow-hidden"
           >
             <img
-              src="https://images.unsplash.com/photo-1578303512597-819858652816?auto=format&amp;fit=crop&amp;w=500&amp;q=80"
+              src="https://images.unsplash.com/photo-1592840496694-26d035b52b48?auto=format&amp;fit=crop&amp;w=500&amp;q=80"
               class="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
               alt="Switch"
             />
@@ -928,6 +1031,9 @@
                   € 349,-
                 </div>
                 <div class="text-2xl font-black text-slate-900">€ 289,-</div>
+                <div class="text-[11px] font-bold text-primary mt-1">
+                  bij Bol.com
+                </div>
               </div>
               <button
                 class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg shadow-primary/30"
@@ -977,6 +1083,9 @@
                   € 59,99
                 </div>
                 <div class="text-2xl font-black text-slate-900">€ 44,95</div>
+                <div class="text-[11px] font-bold text-slate-500 mt-1">
+                  bij Amazon
+                </div>
               </div>
               <button
                 class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg shadow-primary/30"
@@ -1024,6 +1133,9 @@
                   € 89,-
                 </div>
                 <div class="text-2xl font-black text-slate-900">€ 75,-</div>
+                <div class="text-[11px] font-bold text-purple-600 mt-1">
+                  bij Top1Toys
+                </div>
               </div>
               <button
                 class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg shadow-primary/30"
@@ -1071,6 +1183,9 @@
                   € 45,-
                 </div>
                 <div class="text-2xl font-black text-slate-900">€ 34,95</div>
+                <div class="text-[11px] font-bold text-primary mt-1">
+                  bij Bol.com
+                </div>
               </div>
               <button
                 class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg shadow-primary/30"
@@ -1319,22 +1434,39 @@
 
           <!-- Newsletter -->
           <div class="lg:col-span-4 space-y-6">
-            <h4 class="text-white font-black text-lg">Mis geen deal</h4>
-            <p class="text-slate-400 text-sm font-medium">
-              Ontvang wekelijks de beste aanbiedingen in je mailbox.
-            </p>
-            <form class="flex flex-col gap-3">
-              <input
-                type="email"
-                placeholder="Je e-mailadres"
-                class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-primary transition-colors font-bold"
-              />
-              <button
-                class="w-full bg-primary hover:bg-primaryDark text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-primary/20"
+            <h4 class="text-white font-black text-lg">Meest gezocht</h4>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <a
+                href="#"
+                class="px-3 py-1.5 bg-slate-800 hover:bg-primary rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-colors"
               >
-                Aanmelden
-              </button>
-            </form>
+                LEGO
+              </a>
+              <a
+                href="#"
+                class="px-3 py-1.5 bg-slate-800 hover:bg-primary rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-colors"
+              >
+                PlayStation 5
+              </a>
+              <a
+                href="#"
+                class="px-3 py-1.5 bg-slate-800 hover:bg-primary rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-colors"
+              >
+                Pokemon
+              </a>
+              <a
+                href="#"
+                class="px-3 py-1.5 bg-slate-800 hover:bg-primary rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-colors"
+              >
+                Barbie
+              </a>
+              <a
+                href="#"
+                class="px-3 py-1.5 bg-slate-800 hover:bg-primary rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-colors"
+              >
+                Trampolines
+              </a>
+            </div>
           </div>
         </div>
 
@@ -1354,20 +1486,14 @@
             <div
               class="flex items-center gap-1 font-bold text-slate-400 text-xs"
             >
-              <i data-lucide="credit-card" size="14"></i>
-              iDEAL
+              <i data-lucide="shield-check" size="14"></i>
+              100% Onafhankelijk
             </div>
             <div
               class="flex items-center gap-1 font-bold text-slate-400 text-xs"
             >
-              <i data-lucide="credit-card" size="14"></i>
-              PayPal
-            </div>
-            <div
-              class="flex items-center gap-1 font-bold text-slate-400 text-xs"
-            >
-              <i data-lucide="credit-card" size="14"></i>
-              Visa
+              <i data-lucide="refresh-cw" size="14"></i>
+              Dagelijks updates
             </div>
           </div>
         </div>
